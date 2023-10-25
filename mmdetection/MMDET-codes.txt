@@ -1,0 +1,45 @@
+rtm large webcam
+python demo/webcam_demo.py configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth
+
+rtm small webcam
+python demo/webcam_demo.py configs/rtmdet/rtmdet-ins_tiny_8xb32-300e_coco.py checkpoints/rtmdet-ins_tiny_8xb32-300e_coco_20221130_151727-ec670f7e.pth
+
+
+yolact small webcam
+python demo/webcam_demo.py configs/yolact/yolact_r50_1xb8-55e_coco.py checkpoints/yolact_r50_1x8_coco_20200908-f38d58df.pth
+
+
+yolact large webcam
+python demo/webcam_demo.py configs/yolact/yolact_r101_1xb8-55e_coco.py checkpoints/yolact_r101_1x8_coco_20200908-4cbe9101.pth
+
+
+personal image test
+
+python tools/test.py configs/personal/rtmdet_personal_config.py work_dirs/rtmdet_personal_config/epoch_280.pth
+python demo/image_demo.py TestImage/im3.png configs/personal/rtmdet_personal_config.py  --weights work_dirs/rtmdet_personal_config/epoch_300.pth --pred-score-thr 0.5
+
+
+
+
+image
+
+RTMDET tiny
+python demo/image_demo.py TestImage/im3.png configs/rtmdet/rtmdet-ins_tiny_8xb32-300e_coco.py --weights checkpoints/rtmdet-ins_tiny_8xb32-300e_coco_20221130_151727-ec670f7e.pth --pred-score-thr 0.5
+
+RTMDET Large
+python demo/image_demo.py TestImage/im3.png configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py --weights checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5
+
+
+Yolact tiny
+python demo/image_demo.py TestImage/im3.png configs/yolact/yolact_r50_1xb8-55e_coco.py --weights checkpoints/yolact_r50_1x8_coco_20200908-f38d58df.pth --pred-score-thr 0.5
+
+
+Yolact Large
+python demo/image_demo.py TestImage/im3.png configs/yolact/yolact_r101_1xb8-55e_coco.py --weights checkpoints/yolact_r101_1x8_coco_20200908-4cbe9101.pth --pred-score-thr 0.5
+
+
+yolact small + largetst
+
+rtm det small + largest
+
+both for webcam
