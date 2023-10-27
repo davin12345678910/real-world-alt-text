@@ -9,32 +9,58 @@ from PIL import Image
 
 import llava.llava.serve.cli
 
+# this will be how we will have multiple processors
+# which will allow us to run our code in parallel
+import multiprocessing as mp
+
+
+# here we will be storing the results of each of the methods
+# in which we will be working with
+results_oneformer = None
+results_rtmdet = None
+results_GRiT = None
+results_ocr = None
+results_LLaVA = None
+results_blip2 = None
+
 
 '''
 Description: this method will allow us to recieve json information from RTMDet
 '''
-def run_oneFormer(img):
-    print("running oneFormer")
+def run_oneformer(img):
+    global results_oneformer
+    results_oneformer = "one former ran"
 
 def run_rtmdet(img):
-    print("running rtmdet")
+    global results_rtmdet
+    results_rtmdet = "rtm det ran"
 
 # LLaVA works now!
 def run_LLaVA(img, prompt):
     # here we will be calling cli's get_llava method
-    return llava.llava.serve.cli.get_LLaVA(prompt, img)
+    global results_LLaVA
+    results_LLaVA = "LLaVA ran"
+    # llava.llava.serve.cli.get_LLaVA(prompt, img)
 
 def run_GRiT(img):
-    print("running GRiT")
+    global results_GRiT
+    results_GRiT = "GRiT ran"
 
 def run_blip2(img):
-    caption = blip2.getBlip2(img)
-    return caption
+    global results_blip2
+    results_blip2 = "blip2 ran"
+    #caption = blip2.getBlip2(img)
+
+def run_ocr(img):
+    global results_ocr
+    results_ocr = "ocr ran"
 
 def get_followup(img):
-    # we will need to get the object from RTMDet
-    # rtmDet, already takes in its own image
-    instance_segmentation = run_rtmdet(img)
+
+    # here we will be doing everything in parallel
+
+
+    return ""
 
 
 
@@ -42,17 +68,8 @@ def get_followup(img):
 This is where we will get 
 '''
 def get_summarization(prompt, img):
+    print("Hello")
 
-    # this will be for image summarization
-    llava = run_LLaVA(prompt, img)
-
-    # here we will be getting the response from blip2
-    blip2 = run_blip2(img)
-
-    # we most likely will want to make a json that we
-    # will be sending to gpt4, test this out
-
-    return llava + blip2
 
 
 # Press the green button in the gutter to run the script.
@@ -67,7 +84,15 @@ if __name__ == '__main__':
 
         # if we recieved the image then we will start processing
         # the image, we most likely need to find some way to know
-        # if it is the first time or if it is the
+        # if it is the first time or if it is the follow up time
+        # we will need to have a count down:
+        # if the count down is over: we will reset the followup boolean
+        # we will also clear out the json which we will pass to gpt4
+
+        # figure out how we can constantly wait for images to come from
+        # the hololense and into the program, and when something is recieved
+        # we will invoke the methods and will invoke different methods depending on
+        # whether it is a follow up question or not
 
         # we need some way to know
         if recieved_image:
@@ -87,6 +112,16 @@ if __name__ == '__main__':
                 print(f"An error occurred: {str(e)}")
 
             # here we will need to determine if this is a follow up question or not
+            follow_up = False
 
-            get_summarization("what is in front of me?", image)
+            if follow_up:
+                response = get_followup(image)
+
+                # this is where we will have the code that will allow
+                # us to send the information to the hololense
+            else:
+                response = get_summarization("what is in front of me?", image)
+
+                # this is where we will have the code that will allow
+                # us to send the information to the hololense
 
