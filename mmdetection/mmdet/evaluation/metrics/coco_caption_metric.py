@@ -96,7 +96,7 @@ class COCOCaptionMetric(BaseMetric):
 
 def save_result(result, result_dir, filename, remove_duplicate=''):
     """Saving predictions as json file for evaluation."""
-    # combine results from all processes
+    # JsonCombiner results from all processes
     if remove_duplicate:
         result_new = []
         id_list = []

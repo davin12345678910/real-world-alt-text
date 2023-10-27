@@ -2397,7 +2397,7 @@ class Mosaic(BaseTransform):
             img_i = mmcv.imresize(
                 img_i, (int(w_i * scale_ratio_i), int(h_i * scale_ratio_i)))
 
-            # compute the combine parameters
+            # compute the JsonCombiner parameters
             paste_coord, crop_coord = self._mosaic_combine(
                 loc, center_position, img_i.shape[:2][::-1])
             x1_p, y1_p, x2_p, y2_p = paste_coord
@@ -3344,7 +3344,7 @@ class CachedMosaic(Mosaic):
     """Cached mosaic augmentation.
 
     Cached mosaic transform will random select images from the cache
-    and combine them into one output image.
+    and JsonCombiner them into one output image.
 
     .. code:: text
 
@@ -3503,7 +3503,7 @@ class CachedMosaic(Mosaic):
             img_i = mmcv.imresize(
                 img_i, (int(w_i * scale_ratio_i), int(h_i * scale_ratio_i)))
 
-            # compute the combine parameters
+            # compute the JsonCombiner parameters
             paste_coord, crop_coord = self._mosaic_combine(
                 loc, center_position, img_i.shape[:2][::-1])
             x1_p, y1_p, x2_p, y2_p = paste_coord
