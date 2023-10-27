@@ -27,38 +27,66 @@ def run_LLaVA(img, prompt):
 def run_GRiT(img):
     print("running GRiT")
 
+def run_blip2(img):
+    caption = blip2.getBlip2(img)
+    return caption
 
+def get_followup(img):
+    # we will need to get the object from RTMDet
+    # rtmDet, already takes in its own image
+    instance_segmentation = run_rtmdet(img)
 
-def get_followup():
-    # Use a breakpoint in the code line below to debug your script.
-    caption = blip2.getBlip2(image)
-    print(caption)
 
 
 ''''''''''
 This is where we will get 
 '''
 def get_summarization(prompt, img):
-    image_summarization = run_LLaVA(prompt, img)
-    return image_summarization
+
+    # this will be for image summarization
+    llava = run_LLaVA(prompt, img)
+
+    # here we will be getting the response from blip2
+    blip2 = run_blip2(img)
+
+    # we most likely will want to make a json that we
+    # will be sending to gpt4, test this out
+
+    return llava + blip2
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    # this will depend on your path name
-    file_path = "C:\\Users\\davin123\\PycharmProjects\\makeability_real-world-alt-text\\test-image\\king_county_buses.jpg"
+    # Here in main, we will have a serve like main method that will be constantly running in a for loop
+    while True:
 
-    image = None
+        # this will be a placeholder till we have the code that allows us to
+        # recieve the image from the hololense
+        recieved_image = True
 
-    try:
-        image = Image.open(file_path).convert('RGB')
-        # Now you can work with the 'image' object
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        # if we recieved the image then we will start processing
+        # the image, we most likely need to find some way to know
+        # if it is the first time or if it is the
 
-    get_summarization("what is in front of me?", image)
+        # we need some way to know
+        if recieved_image:
+            # this is where we will be
+            # this is where we will be getting the image from the hololense
+            # this will depend on your path name
+            file_path = "C:\\Users\\davin123\\PycharmProjects\\makeability_real-world-alt-text\\test-image\\king_county_buses.jpg"
+            image = None
+            # this is where we will be getting the image object which we will
+            # be passing into the summarization method
+            try:
+                image = Image.open(file_path).convert('RGB')
+                # Now you can work with the 'image' object
+            except FileNotFoundError:
+                print(f"File not found: {file_path}")
+            except Exception as e:
+                print(f"An error occurred: {str(e)}")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+            # here we will need to determine if this is a follow up question or not
+
+            get_summarization("what is in front of me?", image)
+
