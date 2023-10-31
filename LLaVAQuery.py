@@ -200,7 +200,14 @@ for x, y in sorted_centers:
 
     # now we will go through each of the id's for each x
     for object in centers[x]:
-        llava_objects.append({"name" : current_objects[object]["name"], "bbox" : current_objects[object]["bbox"]})
+
+        # we will need to round the number in the bbox
+        coor1 = round(float(current_objects[object]["bbox"][0]), 1)
+        coor2 = round(float(current_objects[object]["bbox"][1]), 1)
+        coor3 = round(float(current_objects[object]["bbox"][2]), 1)
+        coor4 = round(float(current_objects[object]["bbox"][3]), 1)
+        rounded_bbox = [coor1, coor2, coor3, coor4]
+        llava_objects.append({"name" : current_objects[object]["name"], "bbox" : rounded_bbox})
 
 # print("These are the objects: ", llava_objects)
 
@@ -222,18 +229,22 @@ When outputting your response, follow this json structure:
 llava_string = ""
 
 llava_string += "A computer vision model found the following objects in " \
-                "this image, listed in order from top left to bottom right: "
+                "this image, listed in order from left to right: "
 
 index = 0
 for current in llava_objects:
     if index == 0:
-        llava_string += str(current)
+        llava_string += str(current['name'])
     else:
-        llava_string += ", " + str(current)
+        llava_string += ", " + str(current['name'])
 
-llava_string += "Your goal is to write a dense caption of each object" \
+    index = index + 1
+
+llava_string += ". Your goal is to write a dense caption of each object" \
                 " for someone who is blind. Your description of each object" \
-                " should only include information you are fairly confident about." \
+                " should only include information you are fairly confident about. " \
+                "Also, never include any information about gender, such as man or woman." \
+                "If you are not sure, do not include the information." \
                 " When outputting your response, follow this json structure:[ {\"name\":" \
                 " \"an object from the list of objects\", \"caption\": \"a dense caption of the object\"}]"
 
