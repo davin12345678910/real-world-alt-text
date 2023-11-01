@@ -1,16 +1,7 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import blip2
-
 import requests
 from PIL import Image
-
 import llava.llava.serve.cli
-
-# this will be how we will have multiple processors
-# which will allow us to run our code in parallel
 import multiprocessing as mp
 
 
@@ -25,9 +16,9 @@ results_blip2 = None
 
 
 '''
-Description: this method will allow us to recieve json information from RTMDet
+Description: this method allows a user to recieve information from RTMDet
 '''
-def run_oneformer(img):
+def run_oneformer():
     global results_oneformer
     results_oneformer = "one former ran"
 
@@ -55,9 +46,36 @@ def run_ocr(img):
     global results_ocr
     results_ocr = "ocr ran"
 
+
+
 def get_followup(img):
 
     # here we will be doing everything in parallel
+    # when you want to include parameters, have args=()
+    process1 = mp.Process(target=run_oneformer)
+    process2 = mp.Process(target=run_rtmdet)
+    process3 = mp.Process(target=run_LLaVA)
+    process4 = mp.Process(target=run_GRiT)
+    process5 = mp.Process(target=run_blip2)
+    process6 = mp.Process(target=run_ocr)
+
+    process1.run()
+    process2.run()
+    process3.run()
+    process4.run()
+    process5.run()
+    process6.run()
+
+    process1.join()
+    process2.join()
+    process3.join()
+    process4.join()
+    process5.join()
+    process6.join()
+
+
+    # here we need to call the combine method
+
 
 
     return ""

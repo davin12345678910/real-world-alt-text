@@ -1,5 +1,5 @@
-# real-world-alt-text
-# Authors: Davin Win Kyi, Jae Lee, Arvind Manivannan
+# Real-World-Alt-Text
+## Authors: Davin Win Kyi, Jae Lee, Arvind Manivannan
 
 ## Purpose of our system:
 Real-world-alt-text is a system made by our good friends at the Makeability Lab: Davin Win Kyi, Arvind Manivannan and 

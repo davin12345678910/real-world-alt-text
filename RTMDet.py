@@ -8,7 +8,7 @@ import numpy as np
 
 
 # here we will need to go into the right directory
-subprocess.run("cd mmdetection && conda deactivate && conda activate kitchen_access && python demo/image_demo.py TestImage/test_image#1.png configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py --weights checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5", shell=True)
+subprocess.run("cd mmdetection && conda deactivate && conda activate kitchen_access && python demo/image_demo.py TestImage/im2.png configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py --weights checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5", shell=True)
 
 # now let's get the json results and output the results
 with open('mmdetection/outputs/preds/im2.json', 'r') as file:
