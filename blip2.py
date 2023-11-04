@@ -21,3 +21,19 @@ def getBlip2(image):
     generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
 
     return generated_text
+
+
+if __name__ == '__main__':
+    file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\cross_walk.jpg"
+    image = None
+    # this is where we will be getting the image object which we will
+    # be passing into the summarization method
+    try:
+        image = Image.open(file_path).convert('RGB')
+        # Now you can work with the 'image' object
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+    response = getBlip2(image)

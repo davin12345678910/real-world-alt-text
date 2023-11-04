@@ -1,84 +1,103 @@
 import blip2
 import requests
 from PIL import Image
-import llava.llava.serve.cli
 import multiprocessing as mp
+import JsonCombiner.Python.main
+import LLaVA.llava.serve.cli
 
 
-# here we will be storing the results of each of the methods
-# in which we will be working with
-results_oneformer = None
-results_rtmdet = None
-results_GRiT = None
-results_ocr = None
-results_LLaVA = None
-results_blip2 = None
 
 
 '''
 Description: this method allows a user to recieve information from RTMDet
 '''
-def run_oneformer():
+def run_oneformer(queue):
     global results_oneformer
     results_oneformer = "one former ran"
+    queue.put(["oneformer", results_oneformer])
 
-def run_rtmdet(img):
+def run_rtmdet(queue):
     global results_rtmdet
     results_rtmdet = "rtm det ran"
+    queue.put(["rtmdet", results_rtmdet])
 
 # LLaVA works now!
-def run_LLaVA(img, prompt):
+def run_LLaVA(queue):
     # here we will be calling cli's get_llava method
     global results_LLaVA
     results_LLaVA = "LLaVA ran"
     # llava.llava.serve.cli.get_LLaVA(prompt, img)
+    queue.put(["llava", results_LLaVA])
 
-def run_GRiT(img):
+def run_GRiT(queue):
     global results_GRiT
     results_GRiT = "GRiT ran"
+    queue.put(["grit", results_GRiT])
 
-def run_blip2(img):
+def run_blip2(queue):
     global results_blip2
     results_blip2 = "blip2 ran"
     #caption = blip2.getBlip2(img)
+    queue.put(["blip2", results_blip2])
 
-def run_ocr(img):
+def run_ocr(queue):
     global results_ocr
     results_ocr = "ocr ran"
+    queue.put(["ocr", results_ocr])
 
 
 
 def get_followup(img):
 
+    # this is to store the output of the functions that are
+    # being run in parallel
+    queue = mp.Queue()
+
     # here we will be doing everything in parallel
     # when you want to include parameters, have args=()
-    process1 = mp.Process(target=run_oneformer)
-    process2 = mp.Process(target=run_rtmdet)
-    process3 = mp.Process(target=run_LLaVA)
-    process4 = mp.Process(target=run_GRiT)
-    process5 = mp.Process(target=run_blip2)
-    process6 = mp.Process(target=run_ocr)
+    process1 = mp.Process(target=run_oneformer, args=(queue,))
+    process2 = mp.Process(target=run_rtmdet, args=(queue,))
+    process3 = mp.Process(target=run_LLaVA, args=(queue,))
+    process4 = mp.Process(target=run_GRiT, args=(queue,))
+    process5 = mp.Process(target=run_ocr, args=(queue,))
 
-    process1.run()
-    process2.run()
-    process3.run()
-    process4.run()
-    process5.run()
-    process6.run()
+    process1.start()
+    process2.start()
+    process3.start()
+    process4.start()
+    process5.start()
 
     process1.join()
     process2.join()
     process3.join()
     process4.join()
     process5.join()
-    process6.join()
 
+    # here we will need to go into the Queue, and we will
+    # put the results into a dictionary which we will then print
+    results_dict = {}
 
-    # here we need to call the combine method
+    while not queue.empty():
+        item = queue.get()
+        results_dict[item[0]] = item[1]
 
-
+    # here, we will be printing out the results
+    # oneformer, rtmdet, llava, grit, ocr
+    print("oneformer: ", results_dict["oneformer"])
+    print("rtmdet: ", results_dict["rtmdet"])
+    print("llava: ", results_dict["llava"])
+    print("grit: ", results_dict["grit"])
+    print("ocr: ", results_dict["ocr"])
 
     return ""
+
+
+def get_final_json(oneformer, rtmdet, llava, grit, ocr):
+    print("called get_final_json")
+
+    # here we will be calling the main method of the
+    # JsonParsers method
+
 
 
 
@@ -86,60 +105,90 @@ def get_followup(img):
 This is where we will get 
 '''
 def get_summarization(prompt, img):
-    print("Hello")
+
+    # we will need to call LLaVA and pass in the prompt and img
+    # we will also need to call BLIP2, but we only need to pass in an image
+    response = blip2.getBlip2(img)
+
+    # we need to figure out the best way to combine the two
 
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\king_county_buses.jpg"
+    image = None
+    # this is where we will be getting the image object which we will
+    # be passing into the summarization method
+    try:
+        image = Image.open(file_path).convert('RGB')
+        # Now you can work with the 'image' object
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
 
-    # Here in main, we will have a serve like main method that will be constantly running in a for loop
-    while True:
+    get_followup(image)
 
-        # this will be a placeholder till we have the code that allows us to
-        # recieve the image from the hololense
-        recieved_image = True
 
-        # if we recieved the image then we will start processing
-        # the image, we most likely need to find some way to know
-        # if it is the first time or if it is the follow up time
-        # we will need to have a count down:
-        # if the count down is over: we will reset the followup boolean
-        # we will also clear out the json which we will pass to gpt4
 
-        # figure out how we can constantly wait for images to come from
-        # the hololense and into the program, and when something is recieved
-        # we will invoke the methods and will invoke different methods depending on
-        # whether it is a follow up question or not
 
-        # we need some way to know
-        if recieved_image:
-            # this is where we will be
-            # this is where we will be getting the image from the hololense
-            # this will depend on your path name
-            file_path = "C:\\Users\\davin123\\PycharmProjects\\makeability_real-world-alt-text\\test-image\\king_county_buses.jpg"
-            image = None
-            # this is where we will be getting the image object which we will
-            # be passing into the summarization method
-            try:
-                image = Image.open(file_path).convert('RGB')
-                # Now you can work with the 'image' object
-            except FileNotFoundError:
-                print(f"File not found: {file_path}")
-            except Exception as e:
-                print(f"An error occurred: {str(e)}")
 
-            # here we will need to determine if this is a follow up question or not
-            follow_up = False
 
-            if follow_up:
-                response = get_followup(image)
 
-                # this is where we will have the code that will allow
-                # us to send the information to the hololense
-            else:
-                response = get_summarization("what is in front of me?", image)
 
-                # this is where we will have the code that will allow
-                # us to send the information to the hololense
 
+
+
+# Potential code structure for server-client code between hololense
+'''''''''
+# Here in main, we will have a serve like main method that will be constantly running in a for loop
+while True:
+
+    # this will be a placeholder till we have the code that allows us to
+    # recieve the image from the hololense
+    recieved_image = True
+
+    # if we recieved the image then we will start processing
+    # the image, we most likely need to find some way to know
+    # if it is the first time or if it is the follow up time
+    # we will need to have a count down:
+    # if the count down is over: we will reset the followup boolean
+    # we will also clear out the json which we will pass to gpt4
+
+    # figure out how we can constantly wait for images to come from
+    # the hololense and into the program, and when something is recieved
+    # we will invoke the methods and will invoke different methods depending on
+    # whether it is a follow up question or not
+
+    # we need some way to know
+    if recieved_image:
+        # this is where we will be
+        # this is where we will be getting the image from the hololense
+        # this will depend on your path name
+        file_path = "C:\\Users\\davin123\\PycharmProjects\\makeability_real-world-alt-text\\test-image\\king_county_buses.jpg"
+        image = None
+        # this is where we will be getting the image object which we will
+        # be passing into the summarization method
+        try:
+            image = Image.open(file_path).convert('RGB')
+            # Now you can work with the 'image' object
+        except FileNotFoundError:
+            print(f"File not found: {file_path}")
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+
+        # here we will need to determine if this is a follow up question or not
+        follow_up = False
+
+        if follow_up:
+            response = get_followup(image)
+
+            # this is where we will have the code that will allow
+            # us to send the information to the hololense
+        else:
+            response = get_summarization("what is in front of me?", image)
+
+            # this is where we will have the code that will allow
+            # us to send the information to the hololense
+'''
