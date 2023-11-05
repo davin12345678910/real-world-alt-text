@@ -96,7 +96,7 @@ def build_LLaVA_Query():
                 }
 
     # this is where we will be running RTMDet on a given input image
-    subprocess.run("cd mmdetection && conda deactivate && conda activate kitchen_access && python demo/image_demo.py TestImage/test_image#1.png configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py --weights checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5", shell=True)
+    subprocess.run("cd mmdetection && conda deactivate && conda activate kitchen_access && python demo/image_demo.py TestImage/im2.png configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py --weights checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5", shell=True)
 
 
     # here we will retrive the information that RTMDet got and parse throught it
