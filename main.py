@@ -2,10 +2,16 @@ import blip2
 import requests
 from PIL import Image
 import multiprocessing as mp
-import JsonCombiner.Python.main
+
+from PIL import Image
+from transformers import AutoProcessor, Blip2ForConditionalGeneration
+import torch
+
 import LLaVA.llava.serve.cli
-
-
+import torch
+import JsonCombiner.Python.Hierachy
+import JsonCombiner.Python.JsonParser
+import JsonCombiner.Python.main
 
 
 '''
@@ -34,11 +40,13 @@ def run_GRiT(queue):
     results_GRiT = "GRiT ran"
     queue.put(["grit", results_GRiT])
 
-def run_blip2(queue):
-    global results_blip2
-    results_blip2 = "blip2 ran"
-    #caption = blip2.getBlip2(img)
-    queue.put(["blip2", results_blip2])
+def run_blip2(queue, image, processor, model, device):
+    inputs = processor(image, return_tensors="pt").to(device, torch.float16)
+
+    generated_ids = model.generate(**inputs, max_new_tokens=50)
+    generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+
+    queue.put(["blip2", generated_text])
 
 def run_ocr(queue):
     global results_ocr
@@ -104,11 +112,15 @@ def get_final_json(oneformer, rtmdet, llava, grit, ocr):
 ''''''''''
 This is where we will get 
 '''
-def get_summarization(prompt, img):
+def get_summarization(prompt, img, processor, model, device):
+
+    queue = mp.Queue()
 
     # we will need to call LLaVA and pass in the prompt and img
     # we will also need to call BLIP2, but we only need to pass in an image
-    response = blip2.getBlip2(img)
+    run_blip2(queue, img, processor, model, device)
+
+    print(queue.get())
 
     # we need to figure out the best way to combine the two
 
@@ -116,6 +128,16 @@ def get_summarization(prompt, img):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
+    # this is need for the initalization of the blip2 model
+    processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
+
+    model = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-opt-2.7b", torch_dtype=torch.float16,
+                                                          resume_download=True)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # print("This is the device: ", device)
+    model.to(device)
+
     file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\king_county_buses.jpg"
     image = None
     # this is where we will be getting the image object which we will
@@ -128,7 +150,50 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
+    get_summarization("what is in the given image?", image, processor, model, device)
     get_followup(image)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
