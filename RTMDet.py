@@ -8,10 +8,10 @@ import numpy as np
 
 
 # here we will need to go into the right directory
-subprocess.run("cd mmdetection && conda deactivate && conda activate kitchen_access && python demo/image_demo.py TestImage/im2.png configs/rtmdet/rtmdet-ins_x_8xb16-300e_coco.py --weights checkpoints/rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5", shell=True)
+subprocess.run("cd mmdetection && conda deactivate && conda activate openmmlab && python demo/image_demo.py demo/demo.jpg rtmdet-ins_x_8xb16-300e_coco.py --weights rtmdet-ins_x_8xb16-300e_coco_20221124_111313-33d4595b.pth --pred-score-thr 0.5", shell=True)
 
 # now let's get the json results and output the results
-with open('mmdetection/outputs/preds/im2.json', 'r') as file:
+with open('C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\mmdetection\\outputs\\preds\\demo.json', 'r') as file:
     file_contents = file.read()
 
 # turn the file_contents into a json
@@ -159,7 +159,37 @@ for mask in instance_segmentation_json.get("masks"):
 print("These are the json objects: ", json_objects)
 
 # here we will be outputing the result of the image
-image = cv2.imread("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\mmdetection\\TestImage\\im2.png")
+image = cv2.imread("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\mmdetection\\demo\\demo.jpg")
+
+for id in json_objects:
+    # print(len(json_objects[id]["mask"]))
+
+    i = 0
+    for array in json_objects[id]["mask"]:
+        # print("I went in!")
+        poly_coords = np.array(array)
+        cv2.polylines(image, [poly_coords], isClosed=True, color=(0, 255, 0), thickness=2)
+        if i == 0:
+            text_position = tuple(poly_coords[0])
+            cv2.putText(image, json_objects[id]["name"], text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0),
+                        2)
+
+        i = i + 1
+
+# here we will be showing the image with all of the markings
+cv2.imshow('image', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+
+
+#Below is code to output instance segmentation results:
+'''''''''
+# here we will be outputing the result of the image
+image = cv2.imread("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\mmdetection\\demo\\test#1.jpg")
 
 for id in json_objects:
     # print(len(json_objects[id]["mask"]))
@@ -180,6 +210,7 @@ for id in json_objects:
 cv2.imshow('image', image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+'''
 
 
 

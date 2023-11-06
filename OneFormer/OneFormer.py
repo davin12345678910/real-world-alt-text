@@ -187,7 +187,7 @@ def segment(img: Image.Image, task: str):
     return getattr(Visualizer, f"predicted_{task}_map_to_figure")(predicted_map)
 
 # image = download_file("http://images.cocodataset.org/val2017/000000439180.jpg", "test_img#1.jpg")
-image = Image.open("images/dog-park.jpg")
+image = Image.open("images/dog-demo.jpg")
 
 # maybe put semantic later
 task = Dropdown(options=["semantic", "instance", "panoptic"], value="instance")
@@ -211,7 +211,7 @@ res = stack_images_horizontally(result, legend)
 res.show()
 '''
 
-original_image = Image.open("images/dog-park.jpg")
+original_image = Image.open("images/dog-demo.jpg")
 
 # Resize the original image to 800x800 pixels
 original_image = original_image.resize((800, 800))

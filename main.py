@@ -13,14 +13,15 @@ import JsonCombiner.Python.Hierachy
 import JsonCombiner.Python.JsonParser
 import JsonCombiner.Python.main
 
+import test_oneformer
+
 
 '''
 Description: this method allows a user to recieve information from RTMDet
 '''
 def run_oneformer(queue):
-    global results_oneformer
-    results_oneformer = "one former ran"
-    queue.put(["oneformer", results_oneformer])
+    results = test_oneformer.get_oneformer()
+    queue.put(["oneformer", results])
 
 def run_rtmdet(queue):
     global results_rtmdet
