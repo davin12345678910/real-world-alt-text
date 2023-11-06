@@ -26,7 +26,7 @@ def build_LLaVA_Query():
     try:
         response = requests.post(endpoint_url, files=image)
         if response.status_code == 200:
-            print('Response from server:', response.text)
+            # print('Response from server:', response.text)
             results = response.text
         else:
             print('Error:', response.status_code, response.text)
@@ -41,7 +41,8 @@ def build_LLaVA_Query():
     # put them in the sort_horizontal
     for object in json.loads(results)["results"]:
         coordinates = object["bbox"]
-        x_coord = float(coordinates[0]) + float(coordinates[2])
+        print(coordinates)
+        x_coord = (float(coordinates[0][0]) + float(coordinates[2][0])) / 2
         sort_horizontal[x_coord] = object
 
     sorted_keys = sorted(sort_horizontal.keys())
@@ -81,12 +82,11 @@ def build_LLaVA_Query():
     llava_string += ". Your goal is to write a dense caption of each object" \
                     " for someone who is blind." \
                     " For each object given, if you cannot find any given information about an object given the bbox of" \
-                    " an object do not include any information. Your description of each object" \
-                    " should only include information you are fairly confident about. " \
-                    "Also, never include any information about gender, such as man or woman." \
+                    " an object do not include any information. " \
+                    "Also, never include any information about gender, such as man or woman. " \
                     "If you are not sure, do not include the information." \
-                    " When outputting your response, follow this json structure:[ {\"name\":" \
-                    " \"an object from the list of objects\", \"caption\": \"a dense caption of the object\"}]"
+                    " When outputting your response, follow this json structure:{results : [{\"name\":" \
+                    " \"an object from the list of objects\", \"caption\": \"a dense caption of the object\"}]}"
 
 
     # now we will need to pass this into llava

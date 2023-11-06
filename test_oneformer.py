@@ -15,7 +15,7 @@ def get_oneformer():
     try:
         response = requests.post(endpoint_url, files=image)
         if response.status_code == 200:
-            print('Response from server:', response.text)
+            # print('Response from server:', response.text)
             results = response.text
         else:
             print('Error:', response.status_code, response.text)

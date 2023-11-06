@@ -1,3 +1,5 @@
+import json
+
 import blip2
 import requests
 from PIL import Image
@@ -19,9 +21,17 @@ import test_oneformer
 '''
 Description: this method allows a user to recieve information from RTMDet
 '''
-def run_oneformer(queue):
+def run_oneformer():
+    print("I went into oneformer")
     results = test_oneformer.get_oneformer()
-    queue.put(["oneformer", results])
+    print(results)
+
+    json_results = json.loads(results)
+
+    with open("oneformer.json", 'w') as json_file:
+        json.dump(json_results, json_file, indent=4)
+
+    print("Completed call to oneformer!")
 
 def run_rtmdet(queue):
     global results_rtmdet
@@ -60,52 +70,63 @@ def get_followup(img):
 
     # this is to store the output of the functions that are
     # being run in parallel
-    queue = mp.Queue()
+    # queue = mp.Queue()
 
+    print("Started follow up")
     # here we will be doing everything in parallel
     # when you want to include parameters, have args=()
-    process1 = mp.Process(target=run_oneformer, args=(queue,))
-    process2 = mp.Process(target=run_rtmdet, args=(queue,))
-    process3 = mp.Process(target=run_LLaVA, args=(queue,))
-    process4 = mp.Process(target=run_GRiT, args=(queue,))
-    process5 = mp.Process(target=run_ocr, args=(queue,))
+    process1 = mp.Process(target=run_oneformer)
+    # process2 = mp.Process(target=run_rtmdet, args=(queue,))
+    # process3 = mp.Process(target=run_LLaVA, args=(queue,))
+    # process4 = mp.Process(target=run_GRiT, args=(queue,))
+    # process5 = mp.Process(target=run_ocr, args=(queue,))
 
+    print("Starting process1")
     process1.start()
-    process2.start()
-    process3.start()
-    process4.start()
-    process5.start()
+    # process2.start()
+    # process3.start()
+    # process4.start()
+    # process5.start()
 
-    process1.join()
-    process2.join()
-    process3.join()
-    process4.join()
-    process5.join()
+    print("Starting join!")
+    try:
+        process1.join()
+    except Exception as e:
+        print(f"An exception occurred when joining process1: {e}")
+    print("Joined process1")
 
     # here we will need to go into the Queue, and we will
     # put the results into a dictionary which we will then print
-    results_dict = {}
+    oneformer_json = None
+    with open("oneformer.json", "r") as json_file:
+        oneformer_json = json.load(json_file)
 
-    while not queue.empty():
-        item = queue.get()
-        results_dict[item[0]] = item[1]
+    # here we will be reading from the llava_densecap
+    with open('C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\LLaVA_Output\\llava_densecap.json', 'r') as json_file:
+        data = json.load(json_file)
+    print("loaded_json")
 
     # here, we will be printing out the results
     # oneformer, rtmdet, llava, grit, ocr
-    print("oneformer: ", results_dict["oneformer"])
-    print("rtmdet: ", results_dict["rtmdet"])
-    print("llava: ", results_dict["llava"])
-    print("grit: ", results_dict["grit"])
-    print("ocr: ", results_dict["ocr"])
+    print("oneformer: ", oneformer_json)
+    # print("rtmdet: ", results_dict["rtmdet"])
+    print("llava: ", data)
+    # print("grit: ", results_dict["grit"])
+    # print("ocr: ", results_dict["ocr"])
+
+    answer = get_final_json(oneformer_json, data)
 
     return ""
 
 
-def get_final_json(oneformer, rtmdet, llava, grit, ocr):
+def get_final_json(oneformer, llava):
     print("called get_final_json")
 
     # here we will be calling the main method of the
     # JsonParsers method
+    answer = JsonCombiner.Python.main.combine_json(oneformer, llava, "what are the people in front of me wearing?")
+
+    return answer
 
 
 
@@ -130,16 +151,20 @@ def get_summarization(prompt, img, processor, model, device):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
+    print("Starting main!")
+
     # this is need for the initalization of the blip2 model
-    processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
+    # processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
 
-    model = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-opt-2.7b", torch_dtype=torch.float16,
-                                                          resume_download=True)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # model = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-opt-2.7b", torch_dtype=torch.float16,
+    #                                                      resume_download=True)
+    #device = "cuda" if torch.cuda.is_available() else "cpu"
     # print("This is the device: ", device)
-    model.to(device)
+    #model.to(device)
 
-    file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\king_county_buses.jpg"
+    print("BLIP2 pretrained complete!")
+
+    file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\im2.png"
     image = None
     # this is where we will be getting the image object which we will
     # be passing into the summarization method
@@ -151,7 +176,7 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"An error occurred: {str(e)}")
 
-    get_summarization("what is in the given image?", image, processor, model, device)
+    # get_summarization("what is in the given image?", image, processor, model, device)
     get_followup(image)
 
 
