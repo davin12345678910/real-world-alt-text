@@ -17,6 +17,9 @@ import JsonCombiner.Python.main
 
 import test_oneformer
 
+import easyocr
+import os
+
 
 '''
 Description: this method allows a user to recieve information from RTMDet
@@ -24,7 +27,7 @@ Description: this method allows a user to recieve information from RTMDet
 def run_oneformer():
     print("I went into oneformer")
     results = test_oneformer.get_oneformer()
-    print(results)
+    # print(results)
 
     json_results = json.loads(results)
 
@@ -59,10 +62,15 @@ def run_blip2(queue, image, processor, model, device):
 
     queue.put(["blip2", generated_text])
 
-def run_ocr(queue):
+def run_easyocr(queue):
     global results_ocr
-    results_ocr = "ocr ran"
-    queue.put(["ocr", results_ocr])
+
+    reader = easyocr.Reader(['en'])
+    result = reader.readtext('C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\im2.png')
+
+    # print("These are the results: ", result)
+
+    queue.put(["ocr", result])
 
 
 
@@ -70,20 +78,20 @@ def get_followup(img):
 
     # this is to store the output of the functions that are
     # being run in parallel
-    # queue = mp.Queue()
+    queue = mp.Queue()
 
     print("Started follow up")
     # here we will be doing everything in parallel
     # when you want to include parameters, have args=()
     process1 = mp.Process(target=run_oneformer)
-    # process2 = mp.Process(target=run_rtmdet, args=(queue,))
+    process2 = mp.Process(target=run_easyocr, args=(queue,))
     # process3 = mp.Process(target=run_LLaVA, args=(queue,))
     # process4 = mp.Process(target=run_GRiT, args=(queue,))
     # process5 = mp.Process(target=run_ocr, args=(queue,))
 
     print("Starting process1")
     process1.start()
-    # process2.start()
+    process2.start()
     # process3.start()
     # process4.start()
     # process5.start()
@@ -91,6 +99,7 @@ def get_followup(img):
     print("Starting join!")
     try:
         process1.join()
+        process2.join()
     except Exception as e:
         print(f"An exception occurred when joining process1: {e}")
     print("Joined process1")
@@ -106,25 +115,32 @@ def get_followup(img):
         data = json.load(json_file)
     print("loaded_json")
 
+
+    results_dict = {}
+
+    while (not queue.empty()):
+        current = queue.get()
+        results_dict[current[0]] = current[1]
+
     # here, we will be printing out the results
     # oneformer, rtmdet, llava, grit, ocr
-    print("oneformer: ", oneformer_json)
+    # print("oneformer: ", oneformer_json)
     # print("rtmdet: ", results_dict["rtmdet"])
-    print("llava: ", data)
+    # print("llava: ", data)
     # print("grit: ", results_dict["grit"])
-    # print("ocr: ", results_dict["ocr"])
+    print("ocr: ", results_dict["ocr"])
 
-    answer = get_final_json(oneformer_json, data)
+    answer = get_final_json(oneformer_json, data, results_dict["ocr"])
 
-    return ""
+    return answer
 
 
-def get_final_json(oneformer, llava):
+def get_final_json(oneformer, llava, ocr):
     print("called get_final_json")
 
     # here we will be calling the main method of the
     # JsonParsers method
-    answer = JsonCombiner.Python.main.combine_json(oneformer, llava, "what are the people in front of me wearing?")
+    answer = JsonCombiner.Python.main.combine_json(oneformer, llava, "what are the people in front of me wearing?", ocr)
 
     return answer
 
@@ -150,6 +166,8 @@ def get_summarization(prompt, img, processor, model, device):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
+    os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
     print("Starting main!")
 
@@ -177,7 +195,9 @@ if __name__ == '__main__':
         print(f"An error occurred: {str(e)}")
 
     # get_summarization("what is in the given image?", image, processor, model, device)
-    get_followup(image)
+    followup = get_followup(image)
+
+    print("This is the followup: ", followup)
 
 
 
