@@ -16,18 +16,19 @@ touch to the experience.
 
 
 ## Example use case of our system:
+![My Image](C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png)
 User: what is in front of me?
 
 System: a bus and two people waiting in line
 
 User: what is the bus number and where is the bus headed?
 
-System: the bus number is 4019 and the bus says its headed to tacoma
+System: the bus number is 4604 and the bus says its headed to Bellevue
 
 User: What are the people in line wearing?
 
-System: The first person is wearing a red coat with blue pants and the second person is wearing
-a blue shirt with white shorts. 
+System: The first person is wearing a black coat and a black bag and the second person is wearing
+a black bag and jeans. 
 
 
 ## System overall architecture:
@@ -35,7 +36,6 @@ a blue shirt with white shorts.
 ### JsonCombiner 
 In this sub-directory, we have the code that allows our system to combine all of the information from 
 various important cv models in order to get a json in which we can pass into gpt-4 for queries
-
 
 - JsonParserTestJsons (might be removed)
   - This contains the test jsons which we will be using to test our system 
@@ -46,41 +46,46 @@ various important cv models in order to get a json in which we can pass into gpt
 - textfiles
   - history.txt: this contains previous chat information 
 
-
-### llava
-In this sub-directory we use llava's LLM in order to pass in an image and prompt to get densecap information 
-as well as image summrization information. 
-- To get this information head to: llava/llava/serve/cli.py
-
-
-### mmdetection
-This is a sub-directory from mmdetection that we will use to get RTMDet results 
-- to get RTMDet results we use a RTMDet.py in order to get instance segmentation results 
+### miscellaneous
+This folder contains files that could possibly be used for later 
 
 
 ### test-image:
 This folder contains test images in which can be used for testing purposes 
 
 
-### blip2.py
-This file is used in order to pass in an image which we can later get image summarization results from 
+### blip2_test.py
+This file allows a user to get image summarization information from blip2
 
 
-### LLaVAQuery.py
-This file allows us to pass in results from RTMDet into LLaVA in order to get more accurate densecaptioning results.
-It also allows us to not get invalid or incorrect densecaptions for objects in which LLaVA cannot detect 
+### BuildLLaVAQuery.py
+This file builds a LLaVAQuery in which we will pass into LLaVA so that we can get an optimal response 
+for densecaptions 
 
+### easyocr_test.py
+This file allows us to get text information for a given image along with the bounding boxes for 
+for the text that is recieved 
 
-## main.py
+### main.py
 This file is where we will pass in all of the jsons to get a combined json and pass it into gpt-4 along with a query 
 in order to get an answer from gpt-4
 
-### RTMDet.py
-This file is where we will be able to get results from RTMDet on the current image that is being passed into our system
+### oneformer.json
+This is where we will be storing the output from oneformer 
+
+### test_llava.py
+This is where we will be giving a prompt and image to llava which will allows us 
+
+### test_oneformer.py
+This is where we will be running oneformer 
+
 
 
 
 ## Installation Steps:
+
+(In progress... )
+
 1. `git clone https://github.com/davin12345678910/real-world-alt-text.git`
 2. `pip install requests`
 3. `pip install pillow`
@@ -93,8 +98,6 @@ This file is where we will be able to get results from RTMDet on the current ima
 10. `pip install numpy`
 11. `pip install subprocess`
 12. `pip install opencv-python`
-13. Make sure to download any dependencies for LLaVA here: https://github.com/haotian-liu/LLaVA
-
 
 ## Have any Questions?
 Feel free to contact me at: davin123@uw.edu and davin123@cs.washington.edu 
