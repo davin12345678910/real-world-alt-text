@@ -2,15 +2,18 @@ import json
 import multiprocessing as mp
 import JsonCombiner.Python.Hierachy
 import JsonCombiner.Python.JsonParser
-import JsonCombiner.Python.main
+import JsonCombiner.Python.JsonCombiner
 from blip2 import blip2
-from llava import llava
-from llava import llava_prompt
 from ocr import ocr
 from oneformer import oneformer
+from GRiT import GRiT
+from GPT4 import GPT4_prompt
+from GPT4 import GPT4
 import os
 import openai
 import cv2
+import time
+import re
 
 '''''''''''
 Description: this method allows a user to get the instance segmentations of a
@@ -19,34 +22,29 @@ given image
 Note: had issues with queue, thus we did not add the output to Queue
 '''
 def run_oneformer(queue, image_sum):
-    # print("I went into oneformer")
     results = oneformer.get_oneformer()
     json_results = json.loads(results)
     with open("oneformer/oneformer.json", 'w') as json_file:
         json.dump(json_results, json_file, indent=4)
 
-    # here we need to call oneformer prompt
-    prompt = llava_prompt.build_llava_prompt(results, image_sum)
+    # here we will be calling a method that will allow me to
+    # call llava_api
+    # print(json_results)
 
-    # here we will be calling llava.py
-    result = llava.get_llava(prompt)
+    prompt = GPT4_prompt.build_gpt4_prompt(image_sum)
 
-    # print("This is LLaVA result: ", result)
+    gpt4_results = GPT4.get_gpt4(prompt)
 
-    # turn the response into a json
-    result_json = json.loads(result)
-
-    # print("llava: ", result)
-
-    queue.put(["llava", result_json])
-    # print("I finished calling oneformer")
+    queue.put(["gpt4", json.loads(gpt4_results)])
 
 '''''''''''
-Description: This method is for llava summarizatation
+Description: This method is for llava_api summarizatation
 '''
+'''''''''
 def run_LLaVA_sum(queue, prompt):
     result = llava.get_llava(prompt)
     queue.put(["llava", result])
+'''
 
 
 '''''''''
@@ -62,8 +60,8 @@ def run_easyocr(queue):
 Description: this method allows users to get an image summarization of 
 an image file
 '''
-def run_blip2(queue,):
-    output = blip2.get_blip2()
+def run_blip2(queue, prompt):
+    output = blip2.get_blip2(prompt)
     queue.put(["blip2", output])
 
 
@@ -73,9 +71,8 @@ Description: this method returns the desnecaptioning of different bounding boxes
 NOTE: IN PROGRESS
 '''
 def run_GRiT(queue):
-    global results_GRiT
-    results_GRiT = "GRiT ran"
-    queue.put(["grit", results_GRiT])
+    results = GRiT.get_grit()
+    queue.put(["grit", results])
 
 
 
@@ -91,19 +88,22 @@ def get_followup(image_sum):
 
     # here we will be doing everything in parallel
     # when you want to include parameters, have args=()
+
+    start_time = time.time()
     process1 = mp.Process(target=run_oneformer, args=(queue, image_sum,))
     process2 = mp.Process(target=run_easyocr, args=(queue,))
+    process3 = mp.Process(target=run_GRiT, args=(queue,))
 
     # here we will start all of the processes
     process1.start()
     process2.start()
+    process3.start()
 
-    # print("I am going to join all of these processes")
     # here we will be joining all of the processes
     try:
         process1.join()
         process2.join()
-        # print("I joined all of these processes")
+        process3.join()
     except Exception as e:
         print(f"An exception occurred when joining process1: {e}")
 
@@ -120,12 +120,8 @@ def get_followup(image_sum):
         current = queue.get()
         results_dict[current[0]] = current[1]
 
-    answer = get_final_json(oneformer_json, results_dict["llava"], results_dict["ocr"])
-
-    '''''''''
-    with open('C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\output.txt', 'a') as file:
-        file.write('\n' + answer)
-    '''
+    # we will need to add this into the json
+    answer = get_final_json(oneformer_json, json.loads(results_dict["grit"]), results_dict["ocr"], results_dict["gpt4"], start_time)
 
     # return answer
 
@@ -134,37 +130,60 @@ def get_followup(image_sum):
 Description: This method calls JsonCombiner which will combine all of the 
 various json information that we have recieved
 '''
-def get_final_json(oneformer, llava, ocr):
+def get_final_json(oneformer, llava, ocr, gpt4, start_time):
 
     # here we will be calling the main method of the
     # JsonParsers method
-    answer = JsonCombiner.Python.main.combine_json(oneformer, llava, ocr)
+    answer = JsonCombiner.Python.JsonCombiner.combine_json(oneformer, llava, ocr, gpt4)
 
-    # print("Answer: ", answer)
+    end_time = time.time()
+
+    elapsed_time = end_time - start_time
+
+    with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+        file.write("Follow up runtime: " + str(elapsed_time) + "s \n")
+
+    # remove all of the escape characters
+
+    json_result = json.loads(answer)
+
+    with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\answer.json", "w", encoding="utf-8") as file:
+        json.dump(json_result, file, indent=4)
 
     query = ""
     while query != "n":
         query = input("What follow up question do you have? (if no questions enter n): ")
 
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+            file.write("Question asked: " + str(query) + "s \n")
+
         if query != "n":
+
+            start_time_question = time.time()
             # Call ChatGPT
             f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "a")
             f.write(query + "\n")
 
             prefix = "Given the following json answer the current question with previous questions (if any) in mind: "
             betweenItemAndHistory = " Here are the previous questions asked:"
-            currentQuestionPrompt = "Here is the current question, don't answer previous questions but take in mind the previous things that were mentioned, don't repeat any coordinates, do not mention coordinates or bounding boxes, do not give me information that is not in the json or history, if you do not have information about something from the json or hierachy state that you do not have information about it, and answer the current question as if you were talking to a five year old: "
+            currentQuestionPrompt = "Here is the current question, don't answer previous questions but take in mind the " \
+                                    "previous things that were mentioned, don't repeat any coordinates, do not mention" \
+                                    " coordinates or bounding boxes, do not give me information that is not in the json " \
+                                    "or history, if you do not have information about something from the json or hierachy " \
+                                    "state that you do not have information about it, also if you are given information about an object's action, choose descriptions answer over" \
+                                    " descriptions2, and answer the current question as if " \
+                                    "you were talking to a five year old: "
 
             f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "r")
             history = f.read()
 
             prompt = prefix + answer + betweenItemAndHistory + history + currentQuestionPrompt + query
 
-            openai.api_key = "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"
+            openai.api_key = "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"
 
             # here we will be building the string that we will put into content
             gpt4_results = openai.ChatCompletion.create(
-                model="gpt-4",
+                model="gpt-4-1106-preview",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt}
@@ -172,7 +191,20 @@ def get_final_json(oneformer, llava, ocr):
             )
 
             response = gpt4_results.choices[0]["message"]["content"]
+
+            stop_time_question= time.time()
+
+            elapsed_time_question = stop_time_question - start_time_question
+
+            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+                file.write("Answer: " + str(response) + "s \n")
+
+            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+                file.write("Answer runtime: " + str(elapsed_time_question) + "s \n")
+
             print("Response: ", response)
+    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "w")
+    f.write("")
 
 
 ''''''''''
@@ -184,15 +216,12 @@ def get_summarization():
 
     # we will need to call LLaVA and pass in the prompt and img
     # we will also need to call BLIP2, but we only need to pass in an image
-    process1 = mp.Process(target=run_blip2, args=(queue,))
-    prompt = "what is in front of me"
-    process2 = mp.Process(target=run_LLaVA_sum, args=(queue, prompt,))
+    prompt_blip2 = "what is in the given image?"
+    process1 = mp.Process(target=run_blip2, args=(queue, prompt_blip2,))
 
     process1.start()
-    process2.start()
 
     process1.join()
-    process2.join()
 
     results_dict = {}
     while (not queue.empty()):
@@ -200,27 +229,22 @@ def get_summarization():
         results_dict[current[0]] = current[1]
 
     # now we will pass in the two results into gpt-4
-    openai.api_key = "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"
+    openai.api_key = "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"
 
-    # here we will be building the string that we will put into content
-    prompt_sum = "Given these two image captions, give me a combined version of these two: (" + results_dict["blip2"] + "), (" + results_dict["llava"] + ")"
-
-    gpt4_results = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt_sum}
-        ]
-    )
-
-    # print("Follow up: ", gpt4_results.choices[0]["message"]["content"])
-    # print("")
-
-    return gpt4_results.choices[0]["message"]["content"]
+    return results_dict["blip2"]
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
+    '''''''''
+    later we will be replacing this code with code that should be able to 
+    recieve input from the hololense and return back output, and will determine 
+    what to do:
+    - either give an image summarization 
+    - give an answer to a follow up question 
+    - get an answer from google (function calling) 
+    '''
 
     # this is so that we can use ocr
     os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -235,7 +259,13 @@ if __name__ == '__main__':
 
     file_list = os.listdir(directory_path)
 
+    index = 1
+
+    # for testing with various test images
     for filename in file_list:
+
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+            file.write("IMAGE NUMBER: " + str(index) + ", Filename: " + filename + " \n")
 
         image = cv2.imread(directory_path + "\\" + filename)
         cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png", image)
@@ -243,15 +273,50 @@ if __name__ == '__main__':
         # now we can get the image summarization, and then after
         print("What's in front of me?")
 
+        start_time = time.time()
         image_sum = get_summarization()
+        end_time = time.time()
+
+        elapsed_time = end_time - start_time
+
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+            file.write("Image sum: " + str(image_sum) + "s \n")
+
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+            file.write("Image sum runtime: " + str(elapsed_time) + "s \n")
 
         print("Response: ", image_sum)
 
         get_followup(image_sum)
 
+        index = index + 1
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # this code if for webcam intake
     '''''''''''
     # this is where we will be capturing webcam footage which we will then save
     # into an image

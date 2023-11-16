@@ -1,0 +1,144 @@
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg
+Image sum: a group of people and dogss 
+Image sum runtime: 4.017361879348755s 
+Follow up runtime: 21.905694246292114s 
+Question asked: how many people are in front of me?s 
+Answer: There are two people in front of you. One person is sitting on a bench, and the other person is sitting next to them on the same bench. They look like they're having a nice time together!s 
+Answer runtime: 2.907181739807129s 
+Question asked: what are the people wearing?s 
+Answer: The person sitting on the bench has a horizontally striped shirt and light-colored pants. The other person sitting on the bench is wearing a dark jacket and light-colored pants. They both look comfortable and are just hanging out on the bench.s 
+Answer runtime: 2.2739529609680176s 
+Question asked: how many dogs are there?s 
+Answer: There are four doggies in the picture!s 
+Answer runtime: 0.6121246814727783s 
+Question asked: what color are the dogs?s 
+Answer: The colors of the doggies are like this: one doggie is black and white, another one is white, there's a doggie that is brown and white, and there's another one that's grey, black, and white. They're all different and special in their own way!s 
+Answer runtime: 2.9787213802337646s 
+Question asked: what are the dogs doing?s 
+Answer: The dogs are playing and running around. One white dog with black spots looks like it's running fast with its ears flopping in the air, and another dog that's black and white with fluffy fur also looks like it's running towards you, looking really happy and playful! There's also a dog with brown and white colors just chilling on the side, not playing as much as the others.s 
+Answer runtime: 3.029162883758545s 
+Question asked: ns
+
+IMAGE NUMBER: 2, Filename: a_bus.jpg 
+Image sum: a buss 
+Image sum runtime: 5.056898832321167s 
+Follow up runtime: 24.643842697143555s 
+Question asked: are there people trying to board the bus?s 
+Answer: Yes, there are people trying to get on the bus. There's a man and a woman, and they both have backpacks. The man is already stepping onto the bus. They're right by the bus door getting ready to go inside.s 
+Answer runtime: 2.933161735534668s 
+Question asked: where is the bus headed?s 
+Answer: The bus is going to a place called Bellevue TC, sweetie. It's like where all the buses stop and people can get on different buses to go to other places. It's kind of like a big bus playground!s 
+Answer runtime: 4.011673212051392s
+Question asked: what company is the bus with?s 
+Answer: Sweetie, the bus is with a company called 'Metro'. You can tell because the name shows up with pictures of the bus. It seems like a big green and orange bus that helps people travel to different places, like '226 Bellevue TC'. Isn't that neat?s 
+Answer runtime: 2.883197546005249s 
+Question asked: what color is the bus?s 
+Answer: The bus is green and yellow, sweetie. It looks like a big colorful toy, doesn't it?s 
+Answer runtime: 1.3631792068481445s 
+Question asked: is there anything else besides the bus and the people boarding the bus?s 
+Answer: Yes, sweetie, there are also cars! One car is silver and might be at the back, and another car looks white and it's parked on the street. There are also some green bushes and a sidewalk next to the street where the bus and cars are. And look, there's a shadow on the sidewalk that looks like it's from a tree! Isn't that cool?s 
+Answer runtime: 3.6317811012268066s 
+Question asked: ns 
+
+IMAGE NUMBER: 1, Filename: a_group_of_people_biking_towards.jpg 
+Image sum: a group of people riding bicycless 
+Image sum runtime: 3.830763339996338s 
+Follow up runtime: 34.0196590423584s 
+Question asked: how many people are there biking in front of me?s 
+Answer: There are three people biking in front of you!s 
+Answer runtime: 1.3795406818389893s 
+Question asked: what are the people on the bikes wearing?s 
+Answer: The people on the bikes are wearing different things, kiddo. One person, let's call them person1, has a black helmet to protect their head, brown boots with yellow laces on their feet, and they're also wearing a white face mask. Then there's another person, we can call them person3, who is wearing a white hat – it might be a helmet too, to keep safe just like person1's helmet – and they are riding a black bicycle. And lastly, there's person5, described as a man in an orange shirt, riding his bike, but we don't have more details about his clothes from the information I can see. Isn't it fun to imagine all their colorful outfits while they zoom by on their bicycles?s 
+Answer runtime: 11.739747047424316s 
+Question asked: are there any cars in the image?s 
+Answer: Yes, there are cars in the image. Some of them might be just parts of cars because we can't see the whole thing. They could be parked or driving by, but it's hard to tell more about them without seeing the whole picture.s 
+Answer runtime: 2.572896718978882s 
+Question asked: ns
+
+IMAGE NUMBER: 2, Filename: a_rail_road_sign.png 
+Image sum: a railroad crossing signs 
+Image sum runtime: 3.696875810623169s 
+Follow up runtime: 18.18157696723938s 
+Question asked: is the sign flashing?s 
+Answer: The sign isn't flashing, my little friend. It's just a sign standing still!s 
+Answer runtime: 2.322838544845581s 
+Question asked: ns
+
+IMAGE NUMBER: 3, Filename: bench_park.jpg 
+Image sum: two women walking down a sidewalks 
+Image sum runtime: 3.9437994956970215s 
+Follow up runtime: 28.880346298217773s 
+Question asked: what are the two women walking down the road wearing?s 
+Answer: The two women walking down the road are wearing pretty clothes. One lady has blonde hair, sunglasses, a light grey dress, a dark belt, and she's carrying a handbag with patterns on it over her shoulder. The other lady has dark hair, a black skirt, a light blouse, dark high heels, and she's holding a white handbag in her right hand. They both look very nice!s 
+Answer runtime: 6.324932813644409s 
+Question asked: what else is in the image besides the two ladies walking down the road are there?s 
+Answer: Besides the two ladies walking down the road, the image has some benches and people, a dog, and some handbags. There's a bench with a woman sitting on it, and beside her on the bench there's a brown purse. There's another bench with a man sitting, and he has a small doggy on his lap, which is really cute! And there's one more bench in the picture, which is green and empty, with no one sitting on it. That's what we can see in the picture!s 
+Answer runtime: 5.818086385726929s 
+Question asked: ns
+
+IMAGE NUMBER: 4, Filename: blue_bird.png 
+Image sum: a blue bird perched on a barbed wires 
+Image sum runtime: 3.848346710205078s 
+Follow up runtime: 17.62472128868103s 
+Question asked: ns
+
+IMAGE NUMBER: 5, Filename: broken_glass.png 
+Image sum: a broken wine glass on the floors 
+Image sum runtime: 3.87642502784729s 
+Follow up runtime: 17.793778657913208s 
+Question asked: ns
+
+IMAGE NUMBER: 6, Filename: car.jpg 
+Image sum: a white vehicle driving down a desert roads 
+Image sum runtime: 4.948430061340332s 
+Follow up runtime: 19.047391653060913s 
+Question asked: ns
+
+IMAGE NUMBER: 7, Filename: car_towards.png 
+Image sum: a car driving down the street at nights 
+Image sum runtime: 3.38004732131958s 
+Follow up runtime: 27.609623193740845s 
+Question asked: ns
+
+IMAGE NUMBER: 8, Filename: cat_on_table.jpg 
+Image sum: a cat sitting on a wooden tables 
+Image sum runtime: 18.751331567764282s 
+IMAGE NUMBER: 1, Filename: caution_sign.png 
+Image sum: a warning sign in front of a mountains 
+Image sum runtime: 3.6426048278808594s 
+Follow up runtime: 33.10003447532654s 
+Question asked: ns
+
+IMAGE NUMBER: 2, Filename: cheese_bag.jpg 
+Image sum: kraft natural cheese mozarellas 
+Image sum runtime: 4.243715524673462s 
+Follow up runtime: 23.220646619796753s 
+Question asked: ns
+
+IMAGE NUMBER: 3, Filename: cross_walk.jpg 
+Image sum: a pedestrian crossing a streets 
+Image sum runtime: 3.9266982078552246s 
+Follow up runtime: 23.556695461273193s 
+Question asked: can i cross the road?s 
+Answer: Right now, you should wait before crossing the road because there is a red light on the traffic light. Red means stop, so it's safe to stay on the sidewalk until the light turns green. Then you can cross the road!s 
+Answer runtime: 2.665786027908325s 
+Question asked: ns
+
+IMAGE NUMBER: 1, Filename: a_king_county_buses.jpg 
+Image sum: two busess 
+Image sum runtime: 3.456557273864746s 
+Follow up runtime: 17.564940214157104s 
+Question asked: where are the buses headed?s 
+Answer: The buses are headed to the terminal, like a big house where all the buses go to take a little rest before they go on another ride!s 
+Answer runtime: 2.397524833679199s 
+Question asked: what color are the buses?s 
+Answer: The buses are green and yellow, just like a big bright lemon and a yummy green apple!s 
+Answer runtime: 1.1542112827301025s 
+Question asked: what are the bus numbers?s 
+Answer: The bus numbers are big numbers you can find on the sides of the buses. One bus has the number 4801, and the other bus has the number 4700. They're like names for the buses so you know which is which!s 
+Answer runtime: 2.3199594020843506s 
+Question asked: ns 
+IMAGE NUMBER: 2, Filename: current.png 
+Image sum: two busess 
+Image sum runtime: 3.500770092010498s 
+Question asked: what are the two women walking down the road wearing?s 

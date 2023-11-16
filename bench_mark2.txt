@@ -1,0 +1,100 @@
+Front loading runtime: 19.42995834350586s 
+Question asked: what are the two women walking down the road wearing?s
+GPT4 answer: The two women walking down the road are wearing pretty clothes. One woman has a light blue blouse and a black skirt, and she's carrying a white bag. The other woman is wearing a grey dress, sunglasses, and has a bag with different patterns on it. They both look very nice!s 
+Query runtime: 3.4306981563568115s
+Question asked: what else is in the image besides the two ladies walking down the s 
+GPT4 answer: In the image, besides the two ladies walking, there is a bench where two people and a small dog are sitting. One person has white hair and a floral blouse, and the other is wearing a dark suit. Oh, and it's also a sunny day!s 
+Query runtime: 10.542606353759766s
+
+
+Front loading runtime: 12.386003732681274s 
+Question asked: how many people are in front of me?s 
+Question asked: how many people are in front of me?s 
+GPT4 answer: There are two people in front of you. They are both sitting on a wooden bench. One person is wearing blue clothing and the other person is wearing red and white clothing.s 
+Query runtime: 2.218585968017578s 
+Question asked: what are the people wearing?s 
+Question asked: what are the people wearing?s 
+GPT4 answer: The people are wearing clothes with different colors. One person has blue clothing, and the other person has red and white clothing.s 
+Query runtime: 1.802459716796875s 
+Question asked: how many dogs are there?s 
+Question asked: how many dogs are there?s 
+GPT4 answer: There are four doggies in the picture!s 
+Query runtime: 0.8574440479278564s 
+Question asked: what color are the dogs?s 
+Question asked: what color are the dogs?s 
+GPT4 answer: The colors of the dogs are: one dog is white and brown, another dog is black and white, there is one dog that is all white, and there is another dog that is also white and brown.s 
+Query runtime: 1.480726957321167s 
+Question asked: what are the dogs doing?s 
+Question asked: what are the dogs doing?s 
+GPT4 answer: The dogs are playing outside! One small white and brown dog is running fast toward us. There's also a big black and white dog and a big white dog that are running too, but they are a little bit behind the first little dog. And guess what? There is another small white and brown dog, but this one is not running; it's just standing still and watching everything that's happening. Isn't that fun? Dogs love to play and run in the grass!s 
+Query runtime: 3.892543077468872s 
+Question asked: ns 
+
+Front loading runtime: 25.381338834762573s 
+Question asked: are there people trying to board the bus?s
+GPT4 answer: Yes, there are people trying to get on the bus. There is one person who is getting on the bus right now and another person who is waiting to get on after them. They both have backpacks with them.s 
+Query runtime: 3.3388307094573975s 
+Question asked: where is the bus headed?s
+GPT4 answer: The bus is going to a place called Bellevue Transportation Center, which people call "226 BELLEVUE TC" for short. It's like if you have a name, but sometimes your friends call you by a fun nickname!s 
+Query runtime: 3.241485118865967s
+Question asked: what company is the bus with?'s 
+GPT4 answer: The bus is with the company called "Metro." They have electric buses that help take people to different places, and they care about making sure our community is a good place with clean air.s 
+Query runtime: 2.026045322418213s 
+Question asked: what company is the bus with?s 
+Question asked: what company is the bus with?s 
+GPT4 answer: The bus is with a company called Metro, sweetie. It's the one that makes the big electric buses that help people get around the city.s 
+Query runtime: 1.5266704559326172s 
+Question asked: what color is the bus?s 
+Question asked: what color is the bus?s 
+GPT4 answer: The bus is yellow and green.s 
+Query runtime: 0.9118325710296631s 
+Question asked: is there anything else besides the bus and the people boarding the bus?s
+GPT4 answer: Yes, little buddy, besides the bus and people getting on the bus, there are a few other things. There's a sidewalk nearby where people walk, a tall streetlight that shines at night, and some green trees in the background. It�s like a little outside picture with a few different things besides the bus and the people.s 
+Query runtime: 3.2519419193267822s 
+Question asked: ns 
+
+Front loading runtime: 18.098079204559326s 
+Question asked: how many people are there biking in front of me?s
+GPT4 answer: There are two people biking in front of you, one is right in front and another person is a little farther behind the first person.s 
+Query runtime: 2.823066234588623s
+Question asked: what are the people on the bikes wearing?s 
+GPT4 answer: The people on the bikes are wearing black helmets to protect their heads. One person has on yellow shoes that match the straps on the pedals of their bike, and a white face mask. They are wearing casual clothes to ride their bikes.s 
+Query runtime: 3.1997196674346924s
+Question asked: are there any cars in the image?s 
+GPT4 answer: No, there aren't any cars in the picture. It just talks about the weather, the sky, two people riding their bicycles and wearing helmets, and some things in the background like trees and lights. But there's nothing about cars in there!s 
+Query runtime: 3.5301108360290527s 
+Question asked: ns 
+
+Front loading runtime: 10.483104228973389s
+Question asked: is the sign flashing?s 
+GPT4 answer: The information you've given me doesn't say if the sign is flashing or not, so I can't tell you if it's flashing. But it does say the red signal lights are illuminated, which means they are on because a train might be coming.s 
+Query runtime: 4.632790803909302s 
+Question asked: ns 
+
+Front loading runtime: 15.691641569137573s 
+Question asked: can i cross the road?s 
+Question asked: can i cross the road?s 
+GPT4 answer: Sure, let me tell you about crossing the road! Even though we can't see what the traffic light for walking people looks like right now, we know there's a green light for cars to go left. This can mean cars might be moving where you want to walk, so you have to be super careful and look all around to make sure no cars are coming before you step out.
+
+And see, there's a special spot on the road just for people to walk across, called a crosswalk. It has white stripes like a zebra! When it's safe to walk, that's where you can cross, but always remember to hold a grown-up's hand and look both ways to see that no cars are coming.
+
+It's also good to know that there are street lamps around, so if it gets a little dark, they can help you see better. The sign with the walking person on it tells us that there's a place nearby made especially for people to cross. 
+
+So, even though you might be excited to get to the other side, it's most important to be safe and wait for the right time to go across. If you're not sure when to walk, find a grown-up or look for a traffic light with a walking person that will turn green to say "Go!" That's your signal that it's okay to cross.s 
+Query runtime: 16.58544659614563s
+
+
+
+Front loading runtime: 13.911126852035522s 
+Question asked: where are the buses headed?s 
+Question asked: where are the buses headed?s 
+GPT4 answer: The buses are going to a place called 'TO TERMINAL'. That's like their home where they stop and rest, and where people can get on and off.s 
+Query runtime: 2.251811981201172s 
+Question asked: what color are the buses?s 
+Question asked: what color are the buses?s 
+GPT4 answer: The buses are yellow color.s 
+Query runtime: 0.6162111759185791s 
+Question asked: what are the bus numbers?s 
+Question asked: what are the bus numbers?s 
+GPT4 answer: The buses in the picture don't have any numbers that I can tell you about. I only know that both buses are going "TO TERMINAL" because that's what's written on the front displays.s 
+Query runtime: 2.981523275375366s 

@@ -1,0 +1,244 @@
+{
+    "items": [
+        {
+            "center": [
+                211.0,
+                390.5
+            ],
+            "object": "Bus1",
+            "children": [],
+            "descriptions": [
+                {
+                    "description1": "green and yellow bus"
+                },
+                {
+                    "description2": "the word school on the front of a bus"
+                },
+                {
+                    "description3": "front windshield on a bus"
+                },
+                {
+                    "description4": "a bike rack on the front of the bus"
+                }
+            ],
+            "descriptions2": [
+                {
+                    "description": "A yellow and green bus with bright headlights and destination sign lit up, displaying 'TO TERMINAL'. The vehicle is a modern transit bus with a sleek design, reflective windows, and appears to be stationary."
+                }
+            ],
+            "text": [
+                {
+                    "text2": "0TERMINAL",
+                    "boundingBox": [
+                        [
+                            207.0,
+                            256.0
+                        ],
+                        [
+                            343.0,
+                            256.0
+                        ],
+                        [
+                            343.0,
+                            292.0
+                        ],
+                        [
+                            207.0,
+                            292.0
+                        ]
+                    ]
+                },
+                {
+                    "text3": "4801",
+                    "boundingBox": [
+                        [
+                            389.0,
+                            421.0
+                        ],
+                        [
+                            415.0,
+                            421.0
+                        ],
+                        [
+                            415.0,
+                            435.0
+                        ],
+                        [
+                            389.0,
+                            435.0
+                        ]
+                    ]
+                },
+                {
+                    "text4": "F",
+                    "boundingBox": [
+                        [
+                            274.0,
+                            438.0
+                        ],
+                        [
+                            308.0,
+                            438.0
+                        ],
+                        [
+                            308.0,
+                            446.0
+                        ],
+                        [
+                            274.0,
+                            446.0
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "center": [
+                598.5,
+                395.5
+            ],
+            "object": "Bus2",
+            "children": [],
+            "descriptions": [
+                {
+                    "description1": "green and yellow bus"
+                },
+                {
+                    "description2": "the front window of the bus"
+                },
+                {
+                    "description3": "the word school on the front of a bus"
+                }
+            ],
+            "descriptions2": [
+                {
+                    "description": "Another yellow and green bus, similar in color and design to the first one, with the destination sign also reading 'TO TERMINAL'. It mirrors the first bus in appearance and configuration, indicating it might belong to the same transit system and is also stationary."
+                }
+            ],
+            "text": [
+                {
+                    "text2": "T0 TERMINAL",
+                    "boundingBox": [
+                        [
+                            602.0,
+                            272.0
+                        ],
+                        [
+                            699.0,
+                            272.0
+                        ],
+                        [
+                            699.0,
+                            303.0
+                        ],
+                        [
+                            602.0,
+                            303.0
+                        ]
+                    ]
+                },
+                {
+                    "text3": "4700",
+                    "boundingBox": [
+                        [
+                            759.0,
+                            427.0
+                        ],
+                        [
+                            783.0,
+                            427.0
+                        ],
+                        [
+                            783.0,
+                            441.0
+                        ],
+                        [
+                            759.0,
+                            441.0
+                        ]
+                    ]
+                },
+                {
+                    "text4": "FETRO",
+                    "boundingBox": [
+                        [
+                            659.0,
+                            439.0
+                        ],
+                        [
+                            693.0,
+                            439.0
+                        ],
+                        [
+                            693.0,
+                            451.0
+                        ],
+                        [
+                            659.0,
+                            451.0
+                        ]
+                    ]
+                },
+                {
+                    "text5": "1457651",
+                    "boundingBox": [
+                        [
+                            659.0,
+                            463.0
+                        ],
+                        [
+                            685.0,
+                            463.0
+                        ],
+                        [
+                            685.0,
+                            475.0
+                        ],
+                        [
+                            659.0,
+                            475.0
+                        ]
+                    ]
+                }
+            ]
+        }
+    ],
+    "dense_captions": [
+        {
+            "bbox": [
+                168.0177459716797,
+                49.48377990722656,
+                388.4484558105469,
+                138.1492156982422
+            ],
+            "label": "red helicopter in the sky"
+        },
+        {
+            "bbox": [
+                509.00640869140625,
+                67.51358795166016,
+                711.3438110351562,
+                155.13360595703125
+            ],
+            "label": "red helicopter in the sky"
+        },
+        {
+            "bbox": [
+                6.448687553405762,
+                182.4210205078125,
+                798.6981201171875,
+                562.32421875
+            ],
+            "label": "two green and yellow buses"
+        },
+        {
+            "bbox": [
+                3.5716021060943604,
+                2.588897705078125,
+                780.4921264648438,
+                249.36349487304688
+            ],
+            "label": "the sky is cloudy"
+        }
+    ]
+}
