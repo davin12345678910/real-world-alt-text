@@ -4,5 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/JsonCombiner" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/LLaVA" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/real-time/LAVIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/real-time/MobileSAM" vcs="Git" />
   </component>
 </project>

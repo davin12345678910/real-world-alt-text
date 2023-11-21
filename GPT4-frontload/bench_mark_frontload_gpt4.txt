@@ -1,0 +1,110 @@
+
+File #1: awesome_women_and_dogs.jpg
+Front loading runtime: 14.737008810043335s 
+Question asked: how many people are in front of me? 
+Question asked: how many people are in front of me? 
+GPT4 answer: Based on the information provided, there are two people sitting on the bench in front of you. 
+Query runtime: 2.6132395267486572s 
+Question asked: what are the people wearing? 
+Question asked: what are the people wearing? 
+GPT4 answer: There is no information provided about what the people are wearing in the JSON data. 
+Query runtime: 1.5643284320831299s 
+Question asked: how many dogs are there? 
+Question asked: how many dogs are there? 
+GPT4 answer: In the scene you're experiencing, there are four dogs present. 
+Query runtime: 0.7078826427459717s 
+Question asked: what color are the dogs? 
+Question asked: what color are the dogs? 
+GPT4 answer: In the description provided, there are four dogs mentioned. The first dog, Dog1, is described as having black and white fur. The second dog, Dog2, doesn't have its color described, so I don't have information about its color. The third dog, Dog3, is noted to have beige and white fur. Lastly, the fourth dog, Dog4, is described as having brown and white fur. 
+Query runtime: 4.56246018409729s 
+Question asked: what are the dogs doing? 
+Question asked: what are the dogs doing? 
+GPT4 answer: The dogs in the scene are engaged in lively activities. One black and white dog is running toward us with energy, and its fur is a mix of black and white. Following this dog is a white one, which seems focused and determined, as if it is also in motion, possibly chasing after the first dog. There's a beige and white dog too, which is advancing forward; its ears are perked up, suggesting attentiveness or interest. Lastly, there's a playful small brown and white dog displaying a stance that suggests it's ready to play or maybe romp with the others. All these dogs appear to be busy moving around in the space, which could be something to be mindful of as their paths might intersect with ours. 
+Query runtime: 6.460103750228882s 
+Question asked: n 
+
+File #2: a_bus.jpg
+Front loading runtime: 17.836589813232422s 
+Question asked: are there people trying to board the bus? 
+Question asked: are there people trying to board the bus? 
+GPT4 answer: Yes, there are people who appear to be in the process of boarding the bus. There are two individuals identified in the image facing towards the bus. One of them is described as standing and facing the bus, and seems to be in the act of boarding. The other person is also facing the bus and appears to be waiting in line to board the vehicle. Both persons are carrying dark backpacks and are positioned near the open bus door, which is specifically described as being open for passengers. 
+Query runtime: 4.177184581756592s 
+Question asked: where is the bus headed? 
+Question asked: where is the bus headed? 
+GPT4 answer: The bus is headed to the Bellevue Transit Center, as indicated by the text "226 BELLEVUE TC" displayed on the bus. 
+Query runtime: 1.8215699195861816s 
+Question asked: what company is the bus with? 
+Question asked: what company is the bus with? 
+GPT4 answer: The bus in the image is operated by Metro, as indicated by the text "METRO" displayed on the bus itself. 
+Query runtime: 1.2353620529174805s 
+Question asked: what color is the bus? 
+Question asked: what color is the bus? 
+GPT4 answer: The JSON data does not specify the exact color of the bus. It only mentions that the main colors are green and yellow, without providing further details on the distribution or pattern of these colors on the bus. 
+Query runtime: 2.4125542640686035s 
+Question asked: is there anything else besides the bus and the people boarding the bus? 
+Question asked: is there anything else besides the bus and the people boarding the bus? 
+GPT4 answer: Besides the bus and the people boarding it, there is a pole that is silver in color; it is stationary and located next to the bus, possibly presenting a fixed obstacle near the walkway. There is also a concrete sidewalk where individuals are walking, situated adjacent to the curb where the bus is stopped. In the background, there are trees with green foliage. Above, the sky is described as a clear blue, indicating it is daytime with good visibility. However, details about the texture, specific location relative to you, or sizes of these objects are not provided. 
+Query runtime: 4.1615283489227295s 
+Question asked: n 
+
+File #3: a_group_of_people_biking_towards.jpg
+Front loading runtime: 18.380600690841675s 
+Question asked: how many people are there biking in front of me? 
+Question asked: how many people are there biking in front of me? 
+GPT4 answer: There are two cyclists in front of you. 
+Query runtime: 1.0044777393341064s 
+Question asked: what are the people on the bikes wearing? 
+Question asked: what are the people on the bikes wearing? 
+GPT4 answer: The individuals on the bicycles are described as wearing several items. Cyclist1 is wearing a black helmet as a piece of safety gear, a white mask for protection, a brown casual shirt, and shoes with yellow laces. I do not have detailed clothing information for Cyclist2. 
+Query runtime: 1.904479742050171s 
+Question asked: are there any cars in the image? 
+Question asked: are there any cars in the image? 
+GPT4 answer: Based on the provided JSON data, there is no information about any cars in the image. 
+Query runtime: 0.9605350494384766s 
+Question asked: n 
+
+File #4: a_rail_road_sign.png
+Front loading runtime: 11.76720929145813s 
+Question asked: is the sign flashing? 
+Question asked: is the sign flashing? 
+GPT4 answer: The information provided does not specify whether the sign is flashing. It mentions that the signal lights are illuminated and red, indicating a train is possibly passing or approaching, but there is no mention of flashing lights in the provided details. 
+Query runtime: 1.7593231201171875s 
+Question asked: n 
+
+File #5: bench_park.jpg
+Front loading runtime: 17.233418464660645s 
+Question asked: what are the two women walking down the road wearing? 
+Question asked: what are the two women walking down the road wearing? 
+GPT4 answer: The two women walking down the path are both dressed in professional business attire. The first woman, referred to as Person1, is wearing a gray dress which could be considered business attire. Accompanying her dress, she has on black high heels. The second woman, Person2, is outfitted in a black pencil skirt and a white blouse, and she is wearing black flat shoes. Both women are also wearing white ID badges with blue lanyards. 
+Query runtime: 4.081563949584961s 
+Question asked: what else is in the image besides the two ladies walking down the road are there? 
+Question asked: what else is in the image besides the two ladies walking down the road are there? 
+GPT4 answer: In addition to the two ladies walking, there's a bench on the pathway which has two individuals seated on it. One of the individuals on the bench is wearing a patterned dress, and the other is dressed in dark clothing. There is also a small dog with light-colored fur situated on the lap of one of the individuals sitting on the bench. The bench is described as wooden. Moreover, the setting includes trees with green leaves and the weather appears to be clear and sunny. Please note that the presence of the bench and the dog on the pathway could potentially be obstacles or safety concerns for those navigating the area. 
+Query runtime: 5.020552158355713s 
+Question asked: n
+
+File #13: cross_walk.jpg
+Front loading runtime: 12.94433331489563s 
+Question asked: can i cross the road?
+GPT4 answer: Based on the description provided, it is not advisable to cross the road at this moment. The pedestrian traffic light is displaying a 'Don't Walk' signal, indicated by the red standing man icon. It is important to wait until the pedestrian signal changes to a 'Walk' sign, which would be indicated by a different tone or verbal message from the traffic light, depending on the assistive features it has for visually impaired individuals. Please stay at the curb and wait for the appropriate signal to ensure your safety. 
+Query runtime: 5.3046910762786865s 
+Question asked: n
+
+File #20: king_county_buses.jpg
+Front loading runtime: 12.336378574371338s 
+Question asked: where are the buses headed? 
+Question asked: where are the buses headed? 
+GPT4 answer: Both buses are headed to the terminal, as indicated by the text "TO TERMINAL" on their LED signs. 
+Query runtime: 1.3197474479675293s 
+Question asked: what color are the buses? 
+Question asked: what color are the buses? 
+GPT4 answer: The buses are described as yellow and green. 
+Query runtime: 0.9094481468200684s 
+Question asked: what are the bus numbers? 
+Question asked: what are the bus numbers? 
+GPT4 answer: The bus numbers present in the description are 4801 for the first bus and 4700 for the second bus. 
+Query runtime: 1.347588300704956s 
+Question asked: n
+Question asked: n 
+
+File #2: a_bus.jpg

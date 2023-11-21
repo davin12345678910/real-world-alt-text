@@ -13,7 +13,6 @@ import os
 import openai
 import cv2
 import time
-import re
 
 '''''''''''
 Description: this method allows a user to get the instance segmentations of a
@@ -27,25 +26,13 @@ def run_oneformer(queue, image_sum):
     with open("oneformer/oneformer.json", 'w') as json_file:
         json.dump(json_results, json_file, indent=4)
 
-    # here we will be calling a method that will allow me to
-    # call llava_api
-    # print(json_results)
-
+    # here we will be calling gpt4 and building
+    # a prompt that we will be passing into gpt4
     prompt = GPT4_prompt.build_gpt4_prompt(image_sum)
 
     gpt4_results = GPT4.get_gpt4(prompt)
 
     queue.put(["gpt4", json.loads(gpt4_results)])
-
-'''''''''''
-Description: This method is for llava_api summarizatation
-'''
-'''''''''
-def run_LLaVA_sum(queue, prompt):
-    result = llava.get_llava(prompt)
-    queue.put(["llava", result])
-'''
-
 
 '''''''''
 Description: this method allows users to get text 
@@ -66,9 +53,7 @@ def run_blip2(queue, prompt):
 
 
 '''''''''
-Description: this method returns the desnecaptioning of different bounding boxes
-
-NOTE: IN PROGRESS
+Description: gives a user the dense captions from a model called GRiT
 '''
 def run_GRiT(queue):
     results = GRiT.get_grit()
@@ -88,7 +73,6 @@ def get_followup(image_sum):
 
     # here we will be doing everything in parallel
     # when you want to include parameters, have args=()
-
     start_time = time.time()
     process1 = mp.Process(target=run_oneformer, args=(queue, image_sum,))
     process2 = mp.Process(target=run_easyocr, args=(queue,))
@@ -120,7 +104,8 @@ def get_followup(image_sum):
         current = queue.get()
         results_dict[current[0]] = current[1]
 
-    # we will need to add this into the json
+    # here we will call a method that will allow us to build the json to pass into gpt4 and to
+    # start conversations with gpt4
     answer = get_final_json(oneformer_json, json.loads(results_dict["grit"]), results_dict["ocr"], results_dict["gpt4"], start_time)
 
     # return answer
@@ -140,23 +125,23 @@ def get_final_json(oneformer, llava, ocr, gpt4, start_time):
 
     elapsed_time = end_time - start_time
 
-    with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+    with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
         file.write("Follow up runtime: " + str(elapsed_time) + "s \n")
-
-    # remove all of the escape characters
 
     json_result = json.loads(answer)
 
     with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\answer.json", "w", encoding="utf-8") as file:
         json.dump(json_result, file, indent=4)
 
+    # here we will be starting our queries with gpt4
     query = ""
     while query != "n":
         query = input("What follow up question do you have? (if no questions enter n): ")
 
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
             file.write("Question asked: " + str(query) + "s \n")
 
+        # here we are going to be checking if we will be doing any more queries or not
         if query != "n":
 
             start_time_question = time.time()
@@ -164,22 +149,23 @@ def get_final_json(oneformer, llava, ocr, gpt4, start_time):
             f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "a")
             f.write(query + "\n")
 
-            prefix = "Given the following json answer the current question with previous questions (if any) in mind: "
-            betweenItemAndHistory = " Here are the previous questions asked:"
-            currentQuestionPrompt = "Here is the current question, don't answer previous questions but take in mind the " \
+            prefix = "Given the following json answer and previous questions (if any): \n Json Answer: \n"
+            betweenItemAndHistory = " Here are the previous questions asked: \n"
+            currentQuestionPrompt = "Answer the current question with the following in mind: don't answer previous questions but take in mind the " \
                                     "previous things that were mentioned, don't repeat any coordinates, do not mention" \
                                     " coordinates or bounding boxes, do not give me information that is not in the json " \
                                     "or history, if you do not have information about something from the json or hierachy " \
-                                    "state that you do not have information about it, also if you are given information about an object's action, choose descriptions answer over" \
-                                    " descriptions2, and answer the current question as if " \
-                                    "you were talking to a five year old: "
+                                    "state that you do not have information about it, " \
+                                    " please answer the following question as if you were " \
+                                    "talking to a person who is blind or has low vision, and lastly treat the responses as if " \
+                                    "the image is being seen through their own eyes rather than a camera."
 
             f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "r")
             history = f.read()
 
-            prompt = prefix + answer + betweenItemAndHistory + history + currentQuestionPrompt + query
+            prompt = prefix + answer + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
 
-            openai.api_key = "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"
+            openai.api_key = "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"
 
             # here we will be building the string that we will put into content
             gpt4_results = openai.ChatCompletion.create(
@@ -196,10 +182,10 @@ def get_final_json(oneformer, llava, ocr, gpt4, start_time):
 
             elapsed_time_question = stop_time_question - start_time_question
 
-            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
                 file.write("Answer: " + str(response) + "s \n")
 
-            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
                 file.write("Answer runtime: " + str(elapsed_time_question) + "s \n")
 
             print("Response: ", response)
@@ -227,9 +213,6 @@ def get_summarization():
     while (not queue.empty()):
         current = queue.get()
         results_dict[current[0]] = current[1]
-
-    # now we will pass in the two results into gpt-4
-    openai.api_key = "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"
 
     return results_dict["blip2"]
 
@@ -264,7 +247,7 @@ if __name__ == '__main__':
     # for testing with various test images
     for filename in file_list:
 
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
             file.write("IMAGE NUMBER: " + str(index) + ", Filename: " + filename + " \n")
 
         image = cv2.imread(directory_path + "\\" + filename)
@@ -279,10 +262,10 @@ if __name__ == '__main__':
 
         elapsed_time = end_time - start_time
 
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
             file.write("Image sum: " + str(image_sum) + "s \n")
 
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark.txt", 'a') as file:
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
             file.write("Image sum runtime: " + str(elapsed_time) + "s \n")
 
         print("Response: ", image_sum)
@@ -290,6 +273,9 @@ if __name__ == '__main__':
         get_followup(image_sum)
 
         index = index + 1
+
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
+            file.write("\n")
 
 
 

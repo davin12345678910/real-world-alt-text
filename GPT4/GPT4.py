@@ -5,7 +5,7 @@ import re
 
 def get_gpt4(prompt):
   # OpenAI API Key
-  api_key = "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"
+  api_key = "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"
 
   # Function to encode the image
   def encode_image(image_path):
@@ -18,11 +18,13 @@ def get_gpt4(prompt):
   # Getting the base64 string
   base64_image = encode_image(image_path)
 
+  # headers for content type and openai token
   headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {api_key}"
   }
 
+  # information that we will be passing to the model
   payload = {
     "model": "gpt-4-vision-preview",
     "messages": [
@@ -45,9 +47,8 @@ def get_gpt4(prompt):
     "max_tokens": 4096
   }
 
+  # response json from ogpt4
   response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-
-  # print("GPT JSON: ", response.json())
 
   # here is how we will get the json string that we will be returning back
   json_string = response.json()["choices"][0]["message"]["content"]

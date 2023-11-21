@@ -19,11 +19,8 @@ def build_gpt4_prompt(image_sum):
     with open("oneformer/oneformer.json", 'r') as json_file:
         results = json_file.read()
 
-    # print("RESULTS: ", results)
-
     for object in json.loads(results)["results"]:
         coordinates = object["bbox"]
-        # print(coordinates)
         x_coord = (float(coordinates[0][0])) / 2
         sort_horizontal[x_coord] = object
 
@@ -71,6 +68,5 @@ def build_gpt4_prompt(image_sum):
             "{response : [{\"name\":" \
                     " \"an object from the list of objects\", \"caption\": \"a dense caption of the object\"}, ...]}"
 
-    # print("LLaVA_string: ", llava_string)
 
     return llava_string
