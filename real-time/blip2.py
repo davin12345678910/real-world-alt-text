@@ -20,8 +20,8 @@ def test_blip2():
 
         image = Image.open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + file).convert('RGB')
         start_time = time.time()
-        prompt = "give me information about this image"
-        inputs = processor(image, return_tensors="pt").to(device, torch.float16)
+        prompt = "What is in the image?"
+        inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
         generated_ids = model.generate(**inputs, max_new_tokens=20)
         generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         end_time = time.time()

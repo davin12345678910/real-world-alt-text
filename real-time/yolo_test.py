@@ -13,14 +13,26 @@ import blip2_endpoint
 import time
 # import replicate
 from multiprocessing import Pool
+import GPT4
 
 # import webbrowser
 
 # from pipeline.cloud.pipelines import run_pipeline
 
+''''''''''
+def process_images_in_parallel(pool, image_tasks):
+    # Use the provided pool to process tasks
+    results = pool.map(get_blip2_response, image_tasks)
+    return results
+'''
 
-def get_blip2_response(path, name, queue):
+# here we will be making a method that will call gpt4
+def get_gpt4_response(path, prompt, key, queue):
+    response = GPT4.get_gpt4(path, prompt, key)
+    queue.put(response)
 
+def get_blip2_response(path, query, queue):
+    # replicate api
     '''''''''
     path, name = args
     # Set the API token environment variable (move this to a more global scope if needed)
@@ -35,36 +47,12 @@ def get_blip2_response(path, name, queue):
     return {"object_name": name, "text": output}
     '''
 
-    ''''''''''
-    output = run_pipeline(
-        # pipeline pointer or ID
-        "paulh/blip-2:v2",
-        #:Image File
-        open("my_file.txt", "rb"),
-        async_run=False,
-    )
+    response = blip2_endpoint.get_blip2(path, query)
 
-    return output.result.result_array()
-    '''
-
-    response = blip2_endpoint.get_blip2(path)
-
-    queue.append(response)
+    queue.put(response)
 
 
-
-    # here we will need to call the blip2_endpoint
-
-
-''''''''''
-def process_images_in_parallel(pool, image_tasks):
-    # Use the provided pool to process tasks
-    results = pool.map(get_blip2_response, image_tasks)
-    return results
-'''
-
-
-def real_time_test(pool, path, query):
+def real_time_test(path):
 
     start_time = time.time()
     model = YOLO('yolov8n.pt')
@@ -166,6 +154,16 @@ def real_time_test(pool, path, query):
     for box in boxes:
         yolo_results[index] = {'bbox': [round(float(box[0]), 2), round(float(box[1]), 2), round(float(box[2]), 2),
                                         round(float(box[3]), 2)]}
+
+        image = Image.open(path)
+
+        crop_area = (int(round(float(box[0]), 2)), int(round(float(box[1]), 2)), int(round(float(box[2]), 2)),
+                                        int(round(float(box[3]), 2)))
+
+        cropped_image = image.crop(crop_area)
+
+        cropped_image.save("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + "cropped_im" + str(index) + ".png")
+
         index = index + 1
 
     index = 0
@@ -186,18 +184,48 @@ def real_time_test(pool, path, query):
     for object in yolo_results:
         yolo_list.append(yolo_results[object])
 
-    # here we need to crop the image, and save it into an image
-    # then we can later pass each of these images into blip2
 
-    # here we are going to get cropped parts of the image and
-    # we are going to be saving them into a cropped folder
-    '''''''''
-    image_tasks = [("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + "cropped_im" + str(i) + ".png", yolo_results[i]["name"]) for i in range(len(yolo_list))]
+    # ask blip2 for a response that includes all of the objects in an image
+    prompt = "Question: What can you tell me overall about each of these objects in the given image: "
 
-    blip2_results = process_images_in_parallel(pool, image_tasks)
-    '''
+    index = 0
 
-    # now we will try to run a bunch of processes in parallel for blip2
+    objects = ""
+
+    for name in count_names:
+        if index == 0:
+            if count_names[name] == 1:
+                objects += name + " "
+            else:
+                objects += str(count_names[name]) + " " + name + "s "
+        else:
+            if count_names[name] == 1:
+                objects += " and " + name
+            else:
+                objects += " and " + str(count_names[name]) + " " + name + "s"
+
+        index = index + 1
+
+    prompt += objects + "? Also, can you tell me about the colors that are present on each of the following objects in the image: " + objects + "? Also, what are each of the following objects in the image doing: " + objects + "? Answer:"
+
+    # print(prompt)
+
+    # now we will pass the following into blip2
+    # response = get_blip2_response(path, prompt)
+
+    # calling gpt4:
+    api_keys = ["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",
+                "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",
+                "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",
+                "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",
+                "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",
+                "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",
+                "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",
+                "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",
+                "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",
+                "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"
+                ]
+
     processes = []
 
     path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\"
@@ -206,7 +234,7 @@ def real_time_test(pool, path, query):
         current = yolo_results[i]
         name = current["name"]
         process = multiprocessing.Process(target=get_blip2_response,
-                                          args=(path + "cropped_im" + str(i) + ".png", queue, name))
+                                          args=(path + "cropped_im" + str(i) + ".png", "What is in the image?", queue))
         processes.append(process)
         print("Started Process!")
         process.start()
@@ -224,9 +252,9 @@ def real_time_test(pool, path, query):
     print("Elapsed_time_first: ", elapsed_time_first)
 
     # here we will gather all of the output
-    data_list = []
-    while not queue.empty():
-        data_list.append(queue.get())
+    # data_list = []
+    #while not queue.empty():
+    #    data_list.append(queue.get())
 
     # from here work on the combination of all the information and then
     # pass the info into gpt-4 turbo for a response given a query
@@ -263,12 +291,10 @@ if __name__=='__main__':
 
     file_list = os.listdir(directory_path)
 
-    with Pool(processes=10) as pool:
-        for file in file_list:
+    # with Pool(processes=10) as pool:
+    for file in file_list:
 
-            query = input("What follow up question do you have? (if no questions enter n): ")
-
-            real_time_test(pool, directory_path + file, query)
+        real_time_test(directory_path + file)
 
 
 
@@ -336,9 +362,44 @@ results.print()
 results.show()
 '''
 
+# here we need to crop the image, and save it into an image
+# then we can later pass each of these images into blip2
 
+# here we are going to get cropped parts of the image and
+# we are going to be saving them into a cropped folder
+'''''''''
+image_tasks = [("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + "cropped_im" + str(i) + ".png", yolo_results[i]["name"]) for i in range(len(yolo_list))]
 
+blip2_results = process_images_in_parallel(pool, image_tasks)
+'''
 
+'''''''''''
+# now we will try to run a bunch of processes in parallel for blip2
+processes = []
+
+path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\"
+queue = multiprocessing.Queue()
+for i in range(len(yolo_list)):
+    current = yolo_results[i]
+    name = current["name"]
+    process = multiprocessing.Process(target=get_blip2_response,
+                                      args=(path + "cropped_im" + str(i) + ".png", queue, name))
+    processes.append(process)
+    print("Started Process!")
+    process.start()
+
+for process in processes:
+    process.join()
+    print("Joined process!")
+
+print("All processes complete!")
+
+end_time_first = time.time()
+
+elapsed_time_first = end_time_first - start_time
+
+print("Elapsed_time_first: ", elapsed_time_first)
+'''
 
 
 
