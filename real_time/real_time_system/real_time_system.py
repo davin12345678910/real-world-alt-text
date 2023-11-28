@@ -13,6 +13,19 @@ from JsonParser import JsonParser
 
 import json
 
+'''''''''
+Definition:
+this allows a user to get a response from blip2 and store the response in the multiprocessing queue
+
+Parameters:
+bbox - this is the bounding box of the current object in the image 
+path - this is the path of the current cropped image 
+queue - this is where we will be storing the output
+name - this is the name of the object that the cropped image is focusing on 
+
+Returns:
+None
+'''
 def get_blip2_response(bbox, path, queue, name):
 
     response = blip2_endpoint.get_blip2(path, name)
@@ -23,11 +36,26 @@ def get_blip2_response(bbox, path, queue, name):
     queue.put({"name" : name, "bbox": bbox_formatted, "description" : response})
 
 
+'''''''''
+Definition:
+This method will allow a person to ask questions about a given image 
+
+Parmaters: 
+path - this is the path of the current image 
+pool - this is the processing pool that tasks will be using in order to run parallel code 
+queue - this is where we will be storing the results of tasks 
+query - this is the question that we will be asking about the given image 
+model - this is the yolo model that we will be using for object detection 
+
+Returns:
+None
+'''
 def real_time_test(path, pool, queue, query, model):
 
     start_time = time.time()
 
-
+    # this is the results from the yolo mode
+    # this will give us the objects that yolo can detect in the given image
     results = model(
         [path])
 
@@ -35,13 +63,18 @@ def real_time_test(path, pool, queue, query, model):
 
     print("Elapsed_time yolo: ", (end_time3 - start_time))
 
+    '''''''''
+    Here we will be processing all of the yolo information which we will 
+    later use in order to get the bounding boxes for each object which will
+    be used to crop the image 
+    '''
     boxes = None
     classes = None
-
     for key in results:
         boxes = key.boxes.xyxy.tolist()
         classes = key.boxes.cls.tolist()
 
+    # these are the different objects that yolo cna detect
     idToObject = {0: "person",
                   1: "Bicycle",
                   2: "car",
@@ -124,49 +157,38 @@ def real_time_test(path, pool, queue, query, model):
                   79: "Toothbrush",
                   }
 
+    # here we will be getting the cropped images as well as all of the objects that were detected
     yolo_results = {}
     index = 1
 
     for box in boxes:
         yolo_results[index] = {'bbox': [round(float(box[0]), 2), round(float(box[1]), 2), round(float(box[2]), 2),
                                         round(float(box[3]), 2)]}
-
         image = Image.open(path)
-
         crop_area = (int(round(float(box[0]), 2)), int(round(float(box[1]), 2)), int(round(float(box[2]), 2)),
                                         int(round(float(box[3]), 2)))
-
         cropped_image = image.crop(crop_area)
-
         cropped_image_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\cropped_imgs\\" + "cropped_im" + str(index) + ".png"
-
         cropped_image.save(cropped_image_path)
 
         index = index + 1
 
-    # Open the image file
-    image = Image.open(path)  # Replace 'your_image.jpg' with the path to your image file
-
-    # Get the dimensions (size) of the image
+    # here we will be saving the cropped image of the whole image itself
+    image = Image.open(path)
     width, height = image.size
-
     yolo_results[0] = (0, 0, int(round(width, 2)),
                                         int(round(height, 2)))
-
     image = Image.open(path)
-
     crop_area = (0, 0, int(round(width, 2)),
                  int(round(height, 2)))
-
     cropped_image = image.crop(crop_area)
-
     cropped_image_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\cropped_imgs\\" + "cropped_im" + str(
         0) + ".png"
-
     cropped_image.save(cropped_image_path)
 
-    index = 1
 
+    # here we will be making all of the tasks which we will be passing into blip2
+    index = 1
     task_with_bbox = []
 
     # here we will be adding the large image as a task
@@ -187,11 +209,10 @@ def real_time_test(path, pool, queue, query, model):
             count_names[idToObject[c]] = 1
         index = index + 1
 
-    # print(yolo_results)
-
+    # here we will be sorting all of the imanges from left to right
     sorted_tasks = sorted(task_with_bbox, key=lambda x: x[0][0])
 
-    # this will allow us to get the blip2_endpoint_call captions for each image
+    # run all of the blip2 tasks in parallel
     pool.starmap(get_blip2_response, sorted_tasks)
 
     end_time_first = time.time()
@@ -207,14 +228,15 @@ def real_time_test(path, pool, queue, query, model):
 
     print("DATA_LIST: ", data_list)
 
-    # now we can build a hierachies with the given data
-
+    # this is where we build the resulting json with all of the information that we need
     json_data = {"results" : data_list}
 
     currentJsonParser = JsonParser(json_data)
 
     final_json = currentJsonParser.return_final_json()
 
+
+    # this is where we will be storing previous data
     '''''''''
     history_data = "Current time: " + str(time.time()) + "\n Data: " + final_json + "\n\n"
 
@@ -254,9 +276,6 @@ def real_time_test(path, pool, queue, query, model):
     # history_json = None
     # with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\output.json", 'w') as json_file:
     #    history_json = file.read()
-
-
-
     # prompt = (prefix + final_json + " TimeStamp: " + str(time.time()) + ". " + betweenItemAndHistory + history_json +
     #          currentQuestionPrompt + " " + query)
 
@@ -274,12 +293,11 @@ def real_time_test(path, pool, queue, query, model):
         ]
     )
 
+    # this is the response given the json we constructed and the current question
     response = gpt4_results.choices[0]["message"]["content"]
 
     end_time = time.time()
-
     elapsed_time = end_time - start_time
-
     print("Elapsed_time: ", elapsed_time)
 
     print(response)
