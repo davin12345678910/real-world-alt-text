@@ -78,13 +78,9 @@ class JsonParser:
         mask_rcnn_objects = sorted(mask_rcnn_objects,
                                    key=lambda x: Polygon(x["bbox"]).area)
 
-        # print("THESE ARE THE OBJECTS: ", mask_rcnn_objects)
-
         object_names = []
         for object in mask_rcnn_objects:
             object_names.append(object["name"])
-
-        # print("OBJECT NAMES: ", object_names)
 
         """
         #2. This part will iterate through objects from smallest to largest to determine parent/child 
@@ -140,7 +136,6 @@ class JsonParser:
 
         for current_object in llava_objects:
 
-            # print("CURRENT_OBJECT: ", current_object["name"])
             bbox = current_object["bbox"]
 
             # Create a Shapely Polygon object
@@ -155,7 +150,6 @@ class JsonParser:
 
             # here we will need to do the thing where if there are multiple objects we will need to append the
             # count for it to the back
-            # print(current_object["description"])
             current_hierachy = Hierachy(bbox, current_object["name"], current_object["description"])
 
             self.hierachy_dict[current_object["name"]] = current_hierachy
@@ -174,10 +168,6 @@ class JsonParser:
                 intersection_area = current_polygon.intersection(other_polygon).area
                 percentage_overlap = intersection_area / other_polygon.area
                 if percentage_overlap >= self.OVERLAP_THRESHOLD:
-
-                    # print("OVERLAP: ", str(percentage_overlap))
-
-                    # print("OTHER HIERACHY: ", other_hierachy.object_label)
 
                     """
                     Here you will set other hierachies is_child to true 

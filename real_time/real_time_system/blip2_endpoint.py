@@ -2,6 +2,18 @@ import requests
 from PIL import Image
 from io import BytesIO
 
+
+'''''''''
+Definition:
+this method allows a user to get the response from blip2 about a given image with a certain path along with information
+about an object that the current image is representing 
+
+Parameters:
+path - path to the image that we will be analyzing 
+object - this is the object that was detected in the image 
+
+Returns: as much information that blip2 can find from the given image 
+'''
 def get_blip2(path, object):
 
     # this is the endpoint that we will be calling
@@ -9,7 +21,6 @@ def get_blip2(path, object):
 
     # this is the image in which we will be getting the instance segmentation for
     image_file_path = path
-
     image = Image.open(image_file_path)
 
     # Assuming `image` is your PIL Image object

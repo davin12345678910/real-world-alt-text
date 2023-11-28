@@ -21,6 +21,7 @@ class Hierachy:
         4. text: this is the text that the current object has
         5. descriptions: these are the descriptions that the current object has
         6. is_child: tells us if the current object is a child of another object
+        7. includes: this is used to tell us if we will be including a hierachy in the final answer or not
         """
         self.polygon = polygon
         self.children = None
