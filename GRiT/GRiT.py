@@ -3,8 +3,12 @@
 import requests
 
 '''''''''''''''
-Description: this method will allow a user to call an endpoint for oneformer
+Description: 
+this method will allow a user to call an endpoint for oneformer
 where a user can pass in an image and get the instance segmentation of the image
+
+Returns:
+gives a text json of all of the objects in the current image 
 '''
 def get_grit():
 
@@ -17,7 +21,7 @@ def get_grit():
     # this is the image that we will be passing in
     image = {'image' : open(image_file_path, 'rb')}
 
-    # here we will be getting the response from the endpoint
+    # where we will store the result from the endpoint
     results = None
 
     # here we will make a request to the endpoint

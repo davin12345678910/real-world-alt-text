@@ -1,30 +1,10 @@
 from ultralytics import YOLO
-
-import requests
-# from transformers import AutoProcessor, Blip2Processor, Blip2ForConditionalGeneration
-import torch
-# import requests
 from PIL import Image
 import os
 import multiprocessing
-# import blip2_test
 import blip2_endpoint
-# import openai
 import time
-# import replicate
-from multiprocessing import Pool
 import GPT4
-
-# import webbrowser
-
-# from pipeline.cloud.pipelines import run_pipeline
-
-''''''''''
-def process_images_in_parallel(pool, image_tasks):
-    # Use the provided pool to process tasks
-    results = pool.map(get_blip2_response, image_tasks)
-    return results
-'''
 
 # here we will be making a method that will call gpt4
 def get_gpt4_response(path, prompt, key, queue):
@@ -162,7 +142,7 @@ def real_time_test(path):
 
         cropped_image = image.crop(crop_area)
 
-        cropped_image.save("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + "cropped_im" + str(index) + ".png")
+        cropped_image.save("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\cropped_imgs\\" + "cropped_im" + str(index) + ".png")
 
         index = index + 1
 
@@ -228,7 +208,7 @@ def real_time_test(path):
 
     processes = []
 
-    path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\"
+    path = "/real_time/cropped_imgs\\"
     queue = multiprocessing.Queue()
     for i in range(len(yolo_list)):
         current = yolo_results[i]
@@ -287,7 +267,7 @@ def real_time_test(path):
 # here we will be going through each of the images in the test_images
 if __name__=='__main__':
     # here we will be getting multiple images, and then we will be testing them out
-    directory_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\"
+    directory_path = "/test-image\\"
 
     file_list = os.listdir(directory_path)
 
@@ -368,7 +348,7 @@ results.show()
 # here we are going to get cropped parts of the image and
 # we are going to be saving them into a cropped folder
 '''''''''
-image_tasks = [("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + "cropped_im" + str(i) + ".png", yolo_results[i]["name"]) for i in range(len(yolo_list))]
+image_tasks = [("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\cropped_imgs\\" + "cropped_im" + str(i) + ".png", yolo_results[i]["name"]) for i in range(len(yolo_list))]
 
 blip2_results = process_images_in_parallel(pool, image_tasks)
 '''
@@ -377,7 +357,7 @@ blip2_results = process_images_in_parallel(pool, image_tasks)
 # now we will try to run a bunch of processes in parallel for blip2_endpoint_call
 processes = []
 
-path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\"
+path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\cropped_imgs\\"
 queue = multiprocessing.Queue()
 for i in range(len(yolo_list)):
     current = yolo_results[i]

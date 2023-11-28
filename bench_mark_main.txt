@@ -132,3 +132,67 @@ Answer: The bus numbers are 4801 and 4700.s
 Answer runtime: 1.0048012733459473s 
 Question asked: ns 
 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 4.495681524276733s 
+
+IMAGE NUMBER: 2, Filename: a_bus.jpg 
+Image sum: "The bus is green and yellow"s 
+Image sum runtime: 0.39349961280822754s 
+
+IMAGE NUMBER: 3, Filename: a_group_of_people_biking_towards.jpg 
+Image sum: "The image is of a woman wearing a face mask riding a bicycle in the street at sunset"s 
+Image sum runtime: 0.5385034084320068s 
+
+IMAGE NUMBER: 4, Filename: a_rail_road_sign.png 
+Image sum: "the image is of a railroad crossing sign"s 
+Image sum runtime: 0.26903605461120605s 
+
+IMAGE NUMBER: 5, Filename: bench_park.jpg 
+Image sum: "The woman is walking with her dog"s 
+Image sum runtime: 0.25156617164611816s 
+
+IMAGE NUMBER: 6, Filename: cross_walk.jpg 
+Image sum: "the image is of a pedestrian crossing a street"s 
+Image sum runtime: 0.3246293067932129s 
+
+IMAGE NUMBER: 7, Filename: current.png 
+Image sum: "the image is of a pedestrian crossing a street"s 
+Image sum runtime: 0.3477168083190918s 
+
+IMAGE NUMBER: 8, Filename: king_county_buses.jpg 
+Image sum: "The image is of two buses"s 
+Image sum runtime: 0.3150017261505127s 
+
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 0.5449793338775635s 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 0.4795701503753662s 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 0.5173230171203613s 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 0.629650354385376s 
+Question asked: how many dogs are running in the field?s 
+Question asked: are there any people in front of me?s 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 0.6110808849334717s 
+Question asked: how many dogs are in front of me?s 
+IMAGE NUMBER: 1, Filename: awesome_women_and_dogs.jpg 
+Image sum: "The dogs are running in a field"s 
+Image sum runtime: 2.6308774948120117s 
+Question asked: how many dogs are in front of me?s 
+Question asked: are there any people in front of me?s 
+Question asked: what color are the dogs?s 
+Question asked: what are the people wearing?s 
+Question asked: what are the people doing?s 
+Question asked: ns 
+
+IMAGE NUMBER: 2, Filename: a_bus.jpg 
+Image sum: "The bus is green and yellow"s 
+Image sum runtime: 0.8404529094696045s 

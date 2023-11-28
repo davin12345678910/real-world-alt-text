@@ -3,10 +3,15 @@ from PIL import Image
 from io import BytesIO
 
 '''''''''
-Definition: this code calls the blip2 server and return a json of the response from blip2
+Definition: 
+this code calls the blip2_endpoint_call server and return a json of the response from blip2_endpoint_call
 
 Parameters:
-Path - this is the path of the image that we want to pass into blip2 for captioning 
+Path - this is the path of the image that we want to pass into blip2_endpoint_call for captioning 
+
+Returns:
+a response from blip2 with a description of the given image that was passed in as a path 
+
 '''
 def get_blip2(path):
     # this is the endpoint that we will be calling
@@ -14,7 +19,6 @@ def get_blip2(path):
 
     # this is the image in which we will be getting the instance segmentation for
     image_file_path = path
-
     image = Image.open(image_file_path)
 
     # Assuming `image` is your PIL Image object

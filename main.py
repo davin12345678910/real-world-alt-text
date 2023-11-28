@@ -1,14 +1,16 @@
 import json
 import multiprocessing as mp
+
+import GPT4.GPT4_version_gpt4
+import GPT4Frontload.GPT_front_load
 import JsonCombiner.Python.Hierachy
 import JsonCombiner.Python.JsonParser
 import JsonCombiner.Python.JsonCombiner
-from blip2 import blip2
-from ocr import ocr
+from blip2_endpoint_call import blip2_image_summarization
+from easy_ocr import easy_ocr
 from oneformer import oneformer
 from GRiT import GRiT
-from GPT4 import GPT4_prompt
-from GPT4 import GPT4
+from miscellaneous import GPT4_prompt
 import os
 import openai
 import cv2
@@ -39,18 +41,8 @@ Description: this method allows users to get text
 information from a given image
 '''
 def run_easyocr(queue):
-    result = ocr.get_easryocr()
-    queue.put(["ocr", result])
-
-
-'''''''''''
-Description: this method allows users to get an image summarization of 
-an image file
-'''
-def run_blip2(queue, prompt):
-    output = blip2.get_blip2(prompt)
-    queue.put(["blip2", output])
-
+    result = easy_ocr.get_easryocr()
+    queue.put(["easy_ocr", result])
 
 '''''''''
 Description: gives a user the dense captions from a model called GRiT
@@ -65,7 +57,7 @@ def run_GRiT(queue):
 Description: this method will allow a user to ask a follow 
 up question to an image summarization that is given
 '''
-def get_followup(image_sum):
+def followup_mainsys(image_sum):
 
     # this is to store the output of the functions that are
     # being run in parallel
@@ -106,16 +98,21 @@ def get_followup(image_sum):
 
     # here we will call a method that will allow us to build the json to pass into gpt4 and to
     # start conversations with gpt4
-    answer = get_final_json(oneformer_json, json.loads(results_dict["grit"]), results_dict["ocr"], results_dict["gpt4"], start_time)
-
-    # return answer
+    start_followup_query_mainsys(oneformer_json, json.loads(results_dict["grit"]), results_dict["easy_ocr"], results_dict["gpt4"], start_time)
 
 
 '''''''''
 Description: This method calls JsonCombiner which will combine all of the 
 various json information that we have recieved
+
+Parameters:
+oneformer - json of oneformer
+llava- json of oneformer
+ocr - json of easy ocr 
+gpt4 - json of gpt4 
+start_time - this is the start time of the call for this current query 
 '''
-def get_final_json(oneformer, llava, ocr, gpt4, start_time):
+def start_followup_query_mainsys(oneformer, llava, ocr, gpt4, start_time):
 
     # here we will be calling the main method of the
     # JsonParsers method
@@ -149,34 +146,7 @@ def get_final_json(oneformer, llava, ocr, gpt4, start_time):
             f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "a")
             f.write(query + "\n")
 
-            prefix = "Given the following json answer and previous questions (if any): \n Json Answer: \n"
-            betweenItemAndHistory = " Here are the previous questions asked: \n"
-            currentQuestionPrompt = "Answer the current question with the following in mind: don't answer previous questions but take in mind the " \
-                                    "previous things that were mentioned, don't repeat any coordinates, do not mention" \
-                                    " coordinates or bounding boxes, do not give me information that is not in the json " \
-                                    "or history, if you do not have information about something from the json or hierachy " \
-                                    "state that you do not have information about it, " \
-                                    " please answer the following question as if you were " \
-                                    "talking to a person who is blind or has low vision, and lastly treat the responses as if " \
-                                    "the image is being seen through their own eyes rather than a camera."
-
-            f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "r")
-            history = f.read()
-
-            prompt = prefix + answer + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
-
-            openai.api_key = "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"
-
-            # here we will be building the string that we will put into content
-            gpt4_results = openai.ChatCompletion.create(
-                model="gpt-4-1106-preview",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": prompt}
-                ]
-            )
-
-            response = gpt4_results.choices[0]["message"]["content"]
+            response = start_followup_answer_mainsys(answer, query)
 
             stop_time_question= time.time()
 
@@ -193,28 +163,201 @@ def get_final_json(oneformer, llava, ocr, gpt4, start_time):
     f.write("")
 
 
+
+'''''''''
+Definition
+Starts up the querying system for our gpt frontload 
+
+Parameters:
+answer - this is the json that represent the current image that is being queried 
+query - this is the question that the person has about the current image 
+
+Returns:
+None
+'''
+def start_followup_answer_mainsys(answer, query):
+    prefix = "Given the following json answer and previous questions (if any): \n Json Answer: \n"
+    betweenItemAndHistory = " Here are the previous questions asked: \n"
+    currentQuestionPrompt = "Answer the current question with the following in mind: don't answer previous questions but take in mind the " \
+                            "previous things that were mentioned, don't repeat any coordinates, do not mention" \
+                            " coordinates or bounding boxes, do not give me information that is not in the json " \
+                            "or history, if you do not have information about something from the json or hierachy " \
+                            "state that you do not have information about it, " \
+                            " please answer the following question as if you were " \
+                            "talking to a person who is blind or has low vision, and lastly treat the responses as if " \
+                            "the image is being seen through their own eyes rather than a camera."
+
+    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt", "r")
+    history = f.read()
+
+    prompt = prefix + answer + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
+
+    openai.api_key = "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"
+
+    # here we will be building the string that we will put into content
+    gpt4_results = openai.ChatCompletion.create(
+        model="gpt-4-1106-preview",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    response = gpt4_results.choices[0]["message"]["content"]
+
+    return response
+
+
+'''''''''''
+Definition
+This will be where we can start up the followup system for gpt4 frontload
+
+Parameters:
+path - this is the path to the current image 
+
+Returns:
+None
+'''
+def followup_gpt4frontload(path):
+    json_result = GPT4Frontload.GPT_front_load.get_gpt4_frontload(path)
+    start_followup_gpt4frontload(json_result)
+
+
+
+'''''''''
+Definition
+Starts up the querying system for our gpt frontload 
+
+Parameters:
+json_resul - this is the json that represent the current image that is being queried 
+
+Returns:
+None
+'''
+def start_followup_gpt4frontload(json_result):
+
+    # here we will be starting our queries with gpt4
+    query = ""
+    while query != "n":
+        query = input("What follow up question do you have? (if no questions enter n): ")
+
+        # here we are going to be checking if we will be doing any more queries or not
+        if query != "n":
+            # Call ChatGPT
+
+            response = get_followup_answer_gpt4frontload(query, json_result)
+
+            print("Response: ", response)
+
+
+
+'''''''''''
+Definition:
+Gives the user the response to a given query and the current image for our gpt4 frontload system  
+
+Parameters:
+query - this is the current question a person is asking about an image 
+json_result - this is the json that we constructed to represent the image that a person is wondering about 
+
+Returns:
+an answer to a given question anf image of a json 
+'''
+def get_followup_answer_gpt4frontload(query, json_result):
+    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt",
+             "a")
+    f.write(query + "\n")
+
+    prefix = "Given the following json answer and previous questions (if any): \n Json Answer: \n"
+    betweenItemAndHistory = " Here are the previous questions asked: \n"
+    currentQuestionPrompt = "Answer the current question with the following in mind: please give as brief and short responses" \
+                            " as possible, don't answer previous questions but take in mind the " \
+                            "previous things that were mentioned, don't repeat any coordinates, do not mention" \
+                            " coordinates or bounding boxes, do not give me information that is not in the json " \
+                            "or history, if you do not have information about something from the json or hierachy " \
+                            "state that you do not have information about it, " \
+                            " please answer the following question as if you were " \
+                            "talking to a person who is blind or has low vision, and lastly treat the responses as if " \
+                            "the image is being seen through their own eyes rather than a camera."
+
+    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt",
+             "r")
+    history = f.read()
+
+    prompt = prefix + json_result + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
+
+    openai.api_key = "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"
+
+    # here we will be building the string that we will put into content
+    gpt4_results = openai.ChatCompletion.create(
+        model="gpt-4-1106-preview",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    response = gpt4_results.choices[0]["message"]["content"]
+
+    return response
+
+
+
+'''''''''''
+Definition
+This will be where we can start up the followup system for gptsys
+
+Returns: 
+None
+'''
+def followup_gptsys():
+    start_followup_gptsys()
+
+
+
+'''''''''
+Definition
+Starts up the querying system for our gptsys
+
+Returns:
+None
+'''
+def start_followup_gptsys():
+    # here we will be starting our queries with gpt4
+    query = ""
+    while query != "n":
+        query = input("What follow up question do you have? (if no questions enter n): ")
+
+        # here we are going to be checking if we will be doing any more queries or not
+        if query != "n":
+            # Call ChatGPT
+
+            response = get_followup_answer_gpt4sys(query)
+
+            print("Response: ", response)
+
+
+
+'''''''''''
+Definition:
+Gives the user the response to a given query and the current image 
+
+Parameters:
+query - this is the current question a person is asking about an image 
+
+Returns:
+an answer to a given question and a given image 
+'''
+def get_followup_answer_gpt4sys(query):
+    return GPT4.GPT4_version_gpt4.call_gtp4(query)
+
+
+
 ''''''''''
 Description: This is where we will get image summarization information 
 '''
-def get_summarization():
+def get_summarization(path):
+    return blip2_image_summarization.get_blip2(path)
 
-    queue = mp.Queue()
-
-    # we will need to call LLaVA and pass in the prompt and img
-    # we will also need to call BLIP2, but we only need to pass in an image
-    prompt_blip2 = "what is in the given image?"
-    process1 = mp.Process(target=run_blip2, args=(queue, prompt_blip2,))
-
-    process1.start()
-
-    process1.join()
-
-    results_dict = {}
-    while (not queue.empty()):
-        current = queue.get()
-        results_dict[current[0]] = current[1]
-
-    return results_dict["blip2"]
 
 
 # Press the green button in the gutter to run the script.
@@ -229,7 +372,7 @@ if __name__ == '__main__':
     - get an answer from google (function calling) 
     '''
 
-    # this is so that we can use ocr
+    # this is so that we can use easy_ocr
     os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
     os.environ["REPLICATE_API_TOKEN"] = "r8_HfRAhxwo6UJWnpdEPkLhpwC9HIRxGzn0fHb38"
 
@@ -247,96 +390,21 @@ if __name__ == '__main__':
     # for testing with various test images
     for filename in file_list:
 
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
-            file.write("IMAGE NUMBER: " + str(index) + ", Filename: " + filename + " \n")
-
         image = cv2.imread(directory_path + "\\" + filename)
         cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png", image)
 
         # now we can get the image summarization, and then after
         print("What's in front of me?")
 
-        start_time = time.time()
-        image_sum = get_summarization()
-        end_time = time.time()
-
-        elapsed_time = end_time - start_time
-
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
-            file.write("Image sum: " + str(image_sum) + "s \n")
-
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
-            file.write("Image sum runtime: " + str(elapsed_time) + "s \n")
-
+        # this is where we will be getting the image summarization of an image
+        image_sum = get_summarization("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png")
         print("Response: ", image_sum)
 
-        get_followup(image_sum)
+        # this is to call the follow up methods of the main system
+        # get_followup_mainsys(image_sum)
 
-        index = index + 1
+        # this is teh follow up code for gpt4 front loading
+        followup_gpt4frontload("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png")
 
-        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\bench_mark_main.txt", 'a') as file:
-            file.write("\n")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # this code if for webcam intake
-    '''''''''''
-    # this is where we will be capturing webcam footage which we will then save
-    # into an image
-    prev_time = 0
-    capture_interval = 5
-
-    # this is so that we can get webcam footage
-    cap = cv2.VideoCapture(0)
-
-    index = 0
-    while True:
-        ret, frame = cap.read()
-
-        # this is the case if we did not get something
-        if not ret:
-            break
-
-        current_time = time.time()
-
-        if current_time - prev_time > capture_interval:
-            # print("I went into here!")
-            # get_summarization()
-            cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png", frame)
-            cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\im" + str(index) + ".png", frame)
-            result = get_followup()
-            prev_time = current_time
-            index = index + 1
-
-
-        cv2.imshow('Webcam', frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-    '''
+        # this is to test the gptsys
+        # followup_gptsys()

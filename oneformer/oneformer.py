@@ -5,6 +5,9 @@ import requests
 '''''''''''''''
 Description: this method will allow a user to call an endpoint for oneformer
 where a user can pass in an image and get the instance segmentation of the image
+
+Returns:
+this will return the json of oneformer with all of the objects that it detected 
 '''
 def get_oneformer():
 

@@ -2,7 +2,16 @@ import base64
 import requests
 import re
 
+'''''''''
+Definition:
+This allows a user to give a prompt to turbo gpt4 and get a response from it 
 
+Parameters:
+prompt - this is the prompt that you will be asking turbo gpt4 for the current image  
+
+Returns:
+this returns a string that will be an answer given an image and a prompt 
+'''
 def get_gpt4(prompt):
   # OpenAI API Key
   api_key = "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"
@@ -13,7 +22,7 @@ def get_gpt4(prompt):
       return base64.b64encode(image_file.read()).decode('utf-8')
 
   # Path to your image
-  image_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png"
+  image_path = "/test-image/current.png"
 
   # Getting the base64 string
   base64_image = encode_image(image_path)
@@ -47,11 +56,10 @@ def get_gpt4(prompt):
     "max_tokens": 4096
   }
 
-  # response json from ogpt4
+  # response json from gpt4
   response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
   # here is how we will get the json string that we will be returning back
   json_string = response.json()["choices"][0]["message"]["content"]
   json_final_string = json_string[7 : len(json_string) - 3]
-
   return json_final_string

@@ -8,7 +8,7 @@ import time
 
 
 def test_blip2():
-    directory_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs"
+    directory_path = "/real_time/cropped_imgs"
 
     files_and_directories = os.listdir(directory_path)
 
@@ -18,7 +18,7 @@ def test_blip2():
     model.to(device)
     for file in files_and_directories:
 
-        image = Image.open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real-time\\cropped_imgs\\" + file).convert('RGB')
+        image = Image.open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\real_time\\cropped_imgs\\" + file).convert('RGB')
         start_time = time.time()
         prompt = "What is in the image?"
         inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)

@@ -1,0 +1,188 @@
+{
+    "Objects in image": [
+        {
+            "Object name": "Sky",
+            "Children objects": [],
+            "List of Dense captions for object": [
+                "Clear sky",
+                "Blue color"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": []
+        },
+        {
+            "Object name": "Ground",
+            "Children objects": [
+                {
+                    "Object name": "Grass",
+                    "Children objects": [],
+                    "List of Dense captions for object": [
+                        "Green color",
+                        "Uneven surface"
+                    ],
+                    "Text on object": [],
+                    "Possible safety concerns": [
+                        "Potential tripping hazard due to uneven ground"
+                    ]
+                },
+                {
+                    "Object name": "Dirt Path",
+                    "Children objects": [],
+                    "List of Dense captions for object": [
+                        "Brown color",
+                        "Compact surface"
+                    ],
+                    "Text on object": [],
+                    "Possible safety concerns": []
+                }
+            ],
+            "List of Dense captions for object": [
+                "Mixed surfaces of grass and dirt",
+                "Variation in color from green to brown"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": [
+                "Changes in terrain could be an obstacle"
+            ]
+        },
+        {
+            "Object name": "Dog1",
+            "Children objects": [],
+            "List of Dense captions for object": [
+                "Running towards the camera",
+                "White and black color",
+                "Appears energetic"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": [
+                "Movement could be unexpected",
+                "Possibility of collision if oncoming"
+            ]
+        },
+        {
+            "Object name": "Dog2",
+            "Children objects": [],
+            "List of Dense captions for object": [
+                "Running alongside Dog1",
+                "Mostly white with some black",
+                "Appears playful"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": [
+                "Could run into the path of someone",
+                "Moving object in the environment"
+            ]
+        },
+        {
+            "Object name": "Dog3",
+            "Children objects": [],
+            "List of Dense captions for object": [
+                "Positioned behind Dog1 and Dog2",
+                "Brown and white color",
+                "Seems to be following the others"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": [
+                "Further away but still moving, requires awareness"
+            ]
+        },
+        {
+            "Object name": "Dog4",
+            "Children objects": [],
+            "List of Dense captions for object": [
+                "Seated on the ground",
+                "White and brown color",
+                "Not moving"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": []
+        },
+        {
+            "Object name": "People",
+            "Children objects": [
+                {
+                    "Object name": "Person1",
+                    "Children objects": [
+                        {
+                            "Object name": "Shirt",
+                            "Children objects": [],
+                            "List of Dense captions for object": [
+                                "Blue color"
+                            ],
+                            "Text on object": [],
+                            "Possible safety concerns": []
+                        },
+                        {
+                            "Object name": "Pants",
+                            "Children objects": [],
+                            "List of Dense captions for object": [
+                                "Blue color"
+                            ],
+                            "Text on object": [],
+                            "Possible safety concerns": []
+                        }
+                    ],
+                    "List of Dense captions for object": [
+                        "Seated on the bench",
+                        "Watching the dogs",
+                        "Blue clothing"
+                    ],
+                    "Text on object": [],
+                    "Possible safety concerns": []
+                },
+                {
+                    "Object name": "Person2",
+                    "Children objects": [
+                        {
+                            "Object name": "Shirt",
+                            "Children objects": [],
+                            "List of Dense captions for object": [
+                                "Red and white stripes"
+                            ],
+                            "Text on object": [],
+                            "Possible safety concerns": []
+                        },
+                        {
+                            "Object name": "Pants",
+                            "Children objects": [],
+                            "List of Dense captions for object": [
+                                "Blue jeans"
+                            ],
+                            "Text on object": [],
+                            "Possible safety concerns": []
+                        }
+                    ],
+                    "List of Dense captions for object": [
+                        "Seated next to Person1",
+                        "Seems engaged in conversation",
+                        "Striped shirt"
+                    ],
+                    "Text on object": [],
+                    "Possible safety concerns": []
+                }
+            ],
+            "List of Dense captions for object": [
+                "Two individuals seated on a bench",
+                "Appear relaxed",
+                "Attentive to the dogs"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": [
+                "Stationary objects; low risk"
+            ]
+        },
+        {
+            "Object name": "Bench",
+            "Children objects": [],
+            "List of Dense captions for object": [
+                "Wooden structure",
+                "Occupied by People",
+                "Stationary"
+            ],
+            "Text on object": [],
+            "Possible safety concerns": [
+                "Occupied, so may not be available for others to use"
+            ]
+        }
+    ]
+}

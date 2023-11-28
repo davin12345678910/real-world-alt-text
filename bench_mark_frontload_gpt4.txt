@@ -1,0 +1,21 @@
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+Front loading runtime: 19.981775999069214s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+Front loading runtime: 23.39041304588318s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+Front loading runtime: 16.594496488571167s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+Front loading runtime: 1.4054105281829834s 
+Front loading runtime: 1.173215627670288s 
+Front loading runtime: 1.097001552581787s 
+Front loading runtime: 1.1072986125946045s 
+Front loading runtime: 1.104691982269287s 
+Front loading runtime: 1.4395527839660645s 
+Front loading runtime: 1.1082453727722168s 
+Front loading runtime: 1.079054594039917s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
+Front loading runtime: 21.727973699569702s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text\test-image\current.png
