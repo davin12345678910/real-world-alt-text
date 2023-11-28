@@ -24,7 +24,7 @@ class JsonParser:
     Parameters:
     1. mask_rcnn: this is the maskRCNN Json that you will use to get the objects and build the hierachies 
     that consist of the parent/child relationships between objects
-    2. ocr: this is the OCR json, that you will use to get the text which you will be giving to objects 
+    2. easy_ocr: this is the OCR json, that you will use to get the text which you will be giving to objects 
     in the hierachies in which you will be building 
     3. GRiT: this is the GRiT json, that you will use to get the descriptions which you will be giving to
     objects in the hierachies that you will be building 
@@ -96,7 +96,7 @@ class JsonParser:
         """
         #4. Here we will make the final Json as a string, which will contain all of 
         the hierachies that we built from the three 
-        Jsons that were given, mas_rcnn, ocr, and GRiT
+        Jsons that were given, mas_rcnn, easy_ocr, and GRiT
         """
         final_json = self.build_final_json(hierachy)
 
