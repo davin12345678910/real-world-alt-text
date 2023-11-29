@@ -282,7 +282,7 @@ def real_time_test(path, pool, queue, query, model):
     prompt = (prefix + final_json + " TimeStamp: " + str(time.time()) + ". " +
               currentQuestionPrompt + " " + query)
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     # here we will be building the string that we will put into content
     gpt4_results = openai.ChatCompletion.create(

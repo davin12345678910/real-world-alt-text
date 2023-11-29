@@ -269,8 +269,7 @@ def get_followup_answer_gpt4frontload(query, json_result):
 
     prefix = "Given the following json answer and previous questions (if any): \n Json Answer: \n"
     betweenItemAndHistory = " Here are the previous questions asked: \n"
-    currentQuestionPrompt = "Answer the current question with the following in mind: please give as brief and short responses" \
-                            " as possible, don't answer previous questions but take in mind the " \
+    currentQuestionPrompt = "Answer the current question with the following in mind: don't answer previous questions but take in mind the " \
                             "previous things that were mentioned, don't repeat any coordinates, do not mention" \
                             " coordinates or bounding boxes, do not give me information that is not in the json " \
                             "or history, if you do not have information about something from the json or hierachy " \
@@ -285,7 +284,7 @@ def get_followup_answer_gpt4frontload(query, json_result):
 
     prompt = prefix + json_result + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     # here we will be building the string that we will put into content
     gpt4_results = openai.ChatCompletion.create(

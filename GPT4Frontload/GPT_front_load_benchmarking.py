@@ -8,21 +8,22 @@ import json
 
 
 def get_gpt4_frontload(path):
-
     with open("bench_mark_frontload_gpt4.txt", 'a') as current_file:
         current_file.write("File: " + path + "\n")
 
     # OpenAI API Key
-    api_key = "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"
-
+    api_key = "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"
 
     # Function to encode the image
     def encode_image(image_path):
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
 
+    # Path to your image
+    image_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text-GPT4\\test-image\\" + file
+
     # Getting the base64 string
-    base64_image = encode_image(path)
+    base64_image = encode_image(image_path)
 
     headers = {
         "Content-Type": "application/json",
@@ -30,7 +31,7 @@ def get_gpt4_frontload(path):
     }
 
     prompt = """Develop me a valid json that describes the given image. Below are some guidelines to follow and the json structure that is required. 
-    
+
     Please consider:
     Give me only one beginning object for the overall scenery and include for the one json object include information such as:
     Weather 
@@ -59,12 +60,11 @@ def get_gpt4_frontload(path):
                "Text on object": [text, …, text],
                "Possible safety concerns": [text, …, text]
            },
-    
-    
+
+
            <other objects in image>
        ]
     }"""
-
 
     payload = {
         "model": "gpt-4-vision-preview",
@@ -107,9 +107,9 @@ def get_gpt4_frontload(path):
             # here is how we will get the json string that we will be returning back
             json_string = response.json()["choices"][0]["message"]["content"]
 
-            json_data_pre = json_string[json_string.index("{") : len(json_string) - 3]
+            json_data_pre = json_string[json_string.index("{"): len(json_string) - 3]
 
-            json_data = json_data_pre[0 : json_data_pre.rfind("}") + 1]
+            json_data = json_data_pre[0: json_data_pre.rfind("}") + 1]
 
             # load the json data into a file
             json_current = json.loads(json_data)
