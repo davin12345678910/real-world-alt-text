@@ -89,30 +89,15 @@ Note: make sure you have torch and cuda toolkit installed and make sure the cuda
 cuda toolkit: https://developer.nvidia.com/cuda-toolkit
 torch: https://pytorch.org/get-started/locally/
 
-### these are for the main system  
+### these are for the main system (image summarization + ) 
 1. `git clone https://github.com/davin12345678910/real-world-alt-text.git`
 2. `conda create --name real_world_alt_text-makeability python=3.11`
 3. `conda activate real_world_alt_text-makeability`
-4. `pip install requests`
-5. `pip install openai==0.28`
+4. `pip install -r requirements.txt`
 6.  delete the directory that contains JsonCombiner 
 7. `git clone https://github.com/davin12345678910/JsonCombiner.git`
-8. `pip install shapely`
-9. `pip install pillow`
-10. `pip install easyocr`
-11. `pip install pycocotools`
-12. `pip install replicate`
-13. `pip install opencv-python`
-14. `pip install imantics`
-15. if you get an error that says "Error: 'choices', you will need to get your own openai API KEY and set it 
-
-### These are for the blip2 server 
-1. `pip install fastapi`
-2. `pip install git+https://github.com/huggingface/transformers.git`
-3. `pip install uvicorn`
-4. `pip install python-multipart`
-5. `pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121`
-
+8. `pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121`
+9. if you get an error that says "Error: 'choices', you will need to get your own openai API KEY and set it 
 
 ### these are for the real-time system 
 1. `conda create --name real-time python=3.11.5`

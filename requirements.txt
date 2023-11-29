@@ -1,0 +1,13 @@
+requests
+openai==0.28
+shapely
+pillow
+easyocr
+pycocotools
+replicate
+opencv-python
+imantics
+fastapi
+git+https://github.com/huggingface/transformers.git
+uvicorn
+python-multipart
