@@ -39,3 +39,39 @@ def blip2_predict(image: UploadFile = File(...), text: str = Form(...)):
     generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
     return generated_text
 
+
+#syncronus version
+'''''''''
+from fastapi import FastAPI, UploadFile, File, Form, BackgroundTasks
+from transformers import AutoProcessor, Blip2ForConditionalGeneration
+import torch
+from PIL import Image
+import io
+
+app = FastAPI()
+
+# Pretrained parts initialization
+processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
+model = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-opt-2.7b", torch_dtype=torch.float16)
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+model.to(device)
+
+def process_image_and_predict(image_data, text):
+    # Process and predict in a synchronous manner
+    image = Image.open(io.BytesIO(image_data))
+    inputs = processor(image, text=text, return_tensors="pt").to(device, torch.float16)
+    generated_ids = model.generate(**inputs, max_new_tokens=50)
+    generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+    return generated_text
+
+@app.post('/blip2_predict')
+async def blip2_predict(background_tasks: BackgroundTasks, image: UploadFile = File(...), text: str = Form(...)):
+    # Read file asynchronously
+    image_data = await image.read()
+
+    # Offload processing to background
+    background_tasks.add_task(process_image_and_predict, image_data, text)
+
+    return {"message": "Processing started. The result will be handled in the background."}
+'''
+

@@ -15,6 +15,7 @@ import os
 import openai
 import cv2
 import time
+from PIL import Image
 
 '''''''''''
 Description: this method allows a user to get the instance segmentations of a
@@ -236,6 +237,11 @@ None
 '''
 def start_followup_gpt4frontload(json_result):
 
+    # print("I went into here!")
+
+    with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\json_gpt4.json", 'w') as f:
+        json.dump(json_result, f, indent=4)
+
     # here we will be starting our queries with gpt4
     query = ""
     while query != "n":
@@ -263,13 +269,14 @@ Returns:
 an answer to a given question anf image of a json 
 '''
 def get_followup_answer_gpt4frontload(query, json_result):
-    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt",
+    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\textFiles\\history.txt",
              "a")
     f.write(query + "\n")
 
     prefix = "Given the following json answer and previous questions (if any): \n Json Answer: \n"
     betweenItemAndHistory = " Here are the previous questions asked: \n"
-    currentQuestionPrompt = "Answer the current question with the following in mind: don't answer previous questions but take in mind the " \
+    currentQuestionPrompt = "Answer the current question with the following in mind: please be brief and short in your responses \n" \
+                            "please don't answer previous questions but take in mind the, try to infer answers if needed " \
                             "previous things that were mentioned, don't repeat any coordinates, do not mention" \
                             " coordinates or bounding boxes, do not give me information that is not in the json " \
                             "or history, if you do not have information about something from the json or hierachy " \
@@ -278,13 +285,13 @@ def get_followup_answer_gpt4frontload(query, json_result):
                             "talking to a person who is blind or has low vision, and lastly treat the responses as if " \
                             "the image is being seen through their own eyes rather than a camera."
 
-    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\JsonCombiner\\textFiles\\history.txt",
+    f = open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\textFiles\\history.txt",
              "r")
     history = f.read()
 
     prompt = prefix + json_result + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     # here we will be building the string that we will put into content
     gpt4_results = openai.ChatCompletion.create(
@@ -390,20 +397,28 @@ if __name__ == '__main__':
     for filename in file_list:
 
         image = cv2.imread(directory_path + "\\" + filename)
-        cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png", image)
+
+        width = int(image.shape[1] * 0.8)
+        height = int(image.shape[0] * 0.8)
+        new_resolution = (width, height)
+
+        # Resize the image
+        img_resized = cv2.resize(image, new_resolution, interpolation=cv2.INTER_AREA)
+
+        cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png", img_resized)
 
         # now we can get the image summarization, and then after
         print("What's in front of me?")
 
         # this is where we will be getting the image summarization of an image
-        image_sum = get_summarization("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png")
+        image_sum = get_summarization("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png")
         print("Response: ", image_sum)
 
         # this is to call the follow up methods of the main system
         # get_followup_mainsys(image_sum)
 
         # this is teh follow up code for gpt4 front loading
-        followup_gpt4frontload("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png")
+        followup_gpt4frontload("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png")
 
         # this is to test the gptsys
         # followup_gptsys()

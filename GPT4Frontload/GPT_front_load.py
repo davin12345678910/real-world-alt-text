@@ -13,7 +13,7 @@ def get_gpt4_frontload(path):
         current_file.write("File: " + path + "\n")
 
     # OpenAI API Key
-    api_key = "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"
+    api_key = "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"
 
 
     # Function to encode the image
@@ -35,11 +35,10 @@ def get_gpt4_frontload(path):
     Give me only one beginning object for the overall scenery and include for the one json object include information such as:
     Weather 
     Background information, for example are there trees, a sky or sunset shown
-    Give me all the objects that you can find in the image including objects in the background that might not be close by 
+    Give me the maximum amount of objects in the image that you can get 
     Children objects are structured the same way as the parent object and themselves can have children objects as well that are structured the same way. For example, a bus can have a person and person can have a shirt  
     For text include any text and numbers you can find on each object 
     Most important things to include in the json: 
-    Any dangerous obstacles or objects please include them in the json
     Color information of an object (and include all colors you can find in each object) 
     Actions of an object 
     For children objects, include information about what are object is wearing, what i contains in it if visible and more if possible 
@@ -115,7 +114,7 @@ def get_gpt4_frontload(path):
             json_current = json.loads(json_data)
 
             # here we will opening the file
-            with open("json_gpt4.json", 'w') as file:
+            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\GPT4Frontload\\json_gpt4.json", 'w') as file:
                 json.dump(json_current, file, indent=4)
 
             loop = False

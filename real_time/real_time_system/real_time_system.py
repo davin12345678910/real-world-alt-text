@@ -27,13 +27,16 @@ Returns:
 None
 '''
 def get_blip2_response(bbox, path, queue, name):
-
+    start = time.time()
     response = blip2_endpoint.get_blip2(path, name)
     bbox_formatted = [[bbox[0], bbox[1]],
             [bbox[2], bbox[1]],
             [bbox[2], bbox[3]],
             [bbox[0], bbox[3]]]
     queue.put({"name" : name, "bbox": bbox_formatted, "description" : response})
+    end = time.time()
+
+    print("Elapsed_time: ", (end - start))
 
 
 '''''''''
@@ -213,6 +216,7 @@ def real_time_test(path, pool, queue, query, model):
     sorted_tasks = sorted(task_with_bbox, key=lambda x: x[0][0])
 
     # run all of the blip2 tasks in parallel
+
     pool.starmap(get_blip2_response, sorted_tasks)
 
     end_time_first = time.time()
@@ -226,7 +230,7 @@ def real_time_test(path, pool, queue, query, model):
     while not queue.empty():
         data_list.append(queue.get())
 
-    print("DATA_LIST: ", data_list)
+    # print("DATA_LIST: ", data_list)
 
     # this is where we build the resulting json with all of the information that we need
     json_data = {"results" : data_list}
@@ -282,7 +286,7 @@ def real_time_test(path, pool, queue, query, model):
     prompt = (prefix + final_json + " TimeStamp: " + str(time.time()) + ". " +
               currentQuestionPrompt + " " + query)
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     # here we will be building the string that we will put into content
     gpt4_results = openai.ChatCompletion.create(
