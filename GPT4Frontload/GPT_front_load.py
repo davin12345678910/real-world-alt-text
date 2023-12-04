@@ -13,7 +13,7 @@ def get_gpt4_frontload(path):
         current_file.write("File: " + path + "\n")
 
     # OpenAI API Key
-    api_key = "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"
+    api_key = "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"
 
 
     # Function to encode the image
@@ -29,41 +29,31 @@ def get_gpt4_frontload(path):
         "Authorization": f"Bearer {api_key}"
     }
 
-    prompt = """Develop me a valid json that describes the given image. Below are some guidelines to follow and the json structure that is required. 
-    
-    Please consider:
-    Give me only one beginning object for the overall scenery and include for the one json object include information such as:
-    Weather 
-    Background information, for example are there trees, a sky or sunset shown
-    Give me the maximum amount of objects in the image that you can get 
-    Children objects are structured the same way as the parent object and themselves can have children objects as well that are structured the same way. For example, a bus can have a person and person can have a shirt  
-    For text include any text and numbers you can find on each object 
-    Most important things to include in the json: 
-    Color information of an object (and include all colors you can find in each object) 
-    Actions of an object 
-    For children objects, include information about what are object is wearing, what i contains in it if visible and more if possible 
-    If there is no text on an object you can give an empty list: []
-    Have the objects in the json from left to right 
-    For the list of dense captions include information such as the action the objects is taking, what the object color is and any information that relates the current objects with any other objects in the given image
-    If there are multiple objects of the same name make multiple objects with names as follow: <object_name>1, <object_name>2, …, <object_name>n
-    For possible safety concerns, include information that a blind or low vision person may want to consider such as: moving objects that might impact them, if something might be an obstacle in the path in which they are walking and more
-    Lastly give me a json that is within the token limit of 4096 tokens without losing information and maintaining the json structure that is desired 
-    Json structure that is required:
+    prompt = """Develop a json with the following:
+    Have objects ordered left to right 
+    Give me the max amount of objects possible
+    Children objects are structured the same as parents and themselves can have children objects 
+    Things to include for dense captions: 
+    - Color 
+    - Action
+    - What it is wearing if possible such as a shirt, paths etc.
+    - What it contains and more if possible  
+    - Relational information to other objects
+    If no text on object, leave as []
+    If there are multiple objects with the same name: <object_name>1,…,<object_name>n
+    Give a json that is within the 4096 token limit without info loss  
+    Required Json structure:
     {
-       "Objects in image": [
+       "Objects": [
            {
-               "Object name": name,
-               "Children objects": [],
-               "List of Dense captions for object":[dense caption, …, dense caption],
-               "Text on object": [text, …, text],
-               "Possible safety concerns": [text, …, text]
+               "name": name,
+               "Children": [],
+               "Dense captions":[dense caption, …, dense  caption],
+               "Text": [text, …, text]
            },
-    
-    
-           <other objects in image>
+           <other objects>
        ]
     }"""
-
 
     payload = {
         "model": "gpt-4-vision-preview",
@@ -122,3 +112,77 @@ def get_gpt4_frontload(path):
             print("Error: ", e)
 
     return json_data
+
+
+
+
+# previous prompts for frontloading
+'''''''''
+prompt = Develop me a valid json that describes the given image. Below are some guidelines to follow and the json structure that is required. 
+
+Please consider:
+Give me only one beginning object for the overall scenery and include for the one json object include information such as:
+Weather 
+Background information, for example are there trees, a sky or sunset shown
+Give me the maximum amount of objects in the image that you can get 
+Children objects are structured the same way as the parent object and themselves can have children objects as well that are structured the same way. For example, a bus can have a person and person can have a shirt  
+For text include any text and numbers you can find on each object 
+Most important things to include in the json: 
+Color information of an object (and include all colors you can find in each object) 
+Actions of an object 
+For children objects, include information about what are object is wearing, what i contains in it if visible and more if possible 
+If there is no text on an object you can give an empty list: []
+Have the objects in the json from left to right 
+For the list of dense captions include information such as the action the objects is taking, what the object color is and any information that relates the current objects with any other objects in the given image
+If there are multiple objects of the same name make multiple objects with names as follow: <object_name>1, <object_name>2, …, <object_name>n
+For possible safety concerns, include information that a blind or low vision person may want to consider such as: moving objects that might impact them, if something might be an obstacle in the path in which they are walking and more
+Lastly give me a json that is within the token limit of 4096 tokens without losing information and maintaining the json structure that is desired 
+Json structure that is required:
+{
+   "Objects in image": [
+       {
+           "Object name": name,
+           "Children objects": [],
+           "List of Dense captions for object":[dense caption, …, dense caption],
+           "Text on object": [text, …, text],
+           "Possible safety concerns": [text, …, text]
+       },
+
+
+       <other objects in image>
+   ]
+}
+'''
+
+"""Develop me a valid json that describes the given image. Below are some guidelines to follow and the json structure that is required. 
+
+    Please consider:
+    Have the objects in the json from left to right 
+    Give me only one beginning object for the overall scenery and include for the one json object include information such as:
+    Weather 
+    Background information, for example are there trees, a sky or sunset shown
+    Give me the maximum amount of objects in the image that you can get 
+    Children objects are structured the same way as the parent object and themselves can have children objects as well that are structured the same way. For example, a bus can have a person and person can have a shirt  
+    For text include any text you can find on each object 
+    Most important things to include for each object in the json: 
+    Color information of an object  
+    Actions of an object
+    What it is wearing if possible 
+    What it contains in it and more if possible  
+    Information that relates it to other objects
+    If there are multiple objects of the same name make multiple objects with names as follow: <object_name>1, <object_name>2, …, <object_name>n
+    Give me a json that is within the token limit of 4096 tokens without losing information and maintaining the json structure that is desired 
+    Required Json structure:
+    {
+       "Objects": [
+           {
+               "name": name,
+               "Children": [],
+               "Dense captions":[dense caption, …, dense caption],
+               "Text": [text, …, text]
+           },
+
+
+           <other objects in image>
+       ]
+    }"""

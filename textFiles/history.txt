@@ -37,3 +37,31 @@ what color are the dogs in the given image?
 what are the people wearing?
 what are the dogs doing?
 is it sunny outside?
+how many dogs are in the image?
+how many dogs are there?
+how many dogs are there in the field?
+how many people are in the image
+what are the dogs doing?
+what are the people wearing?
+what are the people doing?
+how is the weather?
+how many dogs are there?
+how many dogs are in front of me?
+how many dogs are in front of me?
+how many dogs are there?
+how many people are there?
+what are the people wearing?
+how many dogs are there?
+what color are the dogs?
+what are the dogs doing?
+are there people in the image?
+what are the people doing?
+what are the people wearing?
+are there any people boarding the bus?
+what are the people wearing?
+what is the bus number?
+where is the bus headed?
+what company is the bus with?
+what color is the bus?
+how many people are riding bikes?>
+what are the people wearing?

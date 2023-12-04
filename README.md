@@ -18,67 +18,68 @@ touch to the experience.
 ## Example use case of our system:
 ![](C:\Users\davin\PycharmProjects\real-world-alt-text_test\test-image\awesome_women_and_dogs.jpg)
 
-User: what is in front of me?
+User: How many dogs are in front of me?
+System: There are four dogs in front of me
 
-System: a bus and two people waiting in line
+User: What colors are the dogs?
+System: The colors of the dogs are black and white, white, brown and white, and white with brown 
 
-User: what is the bus number and where is the bus headed?
+User: Are there any people in the image ?
+System: Yes, there are people in the image; they are sitting on a bench 
 
-System: the bus number is 4604 and the bus says its headed to Bellevue
-
-User: What are the people in line wearing?
-
-System: The first person is wearing a black coat and a black bag and the second person is wearing
-a black bag and jeans. 
 
 
 ## System overall architecture:
 
-### JsonCombiner 
-In this sub-directory, we have the code that allows our system to combine all of the information from 
-various important cv models in order to get a json in which we can pass into gpt-4 for queries
+### blip2_endpoint_call
+This is the code that allows an individual to call the blip2 endpoint that we are running 
 
-- JsonParserTestJsons (might be removed)
-  - This contains the test jsons which we will be using to test our system 
-- MainJsons (might be removed)
-  - this is the main json in which we will be using to give json information to our system 
-- python
-  - this contains the python code which we will be using the combine the information from our jsons 
-- textfiles
-  - history.txt: this contains previous chat information 
+### blip2_server
+This code is for the blip2 server which we will be running that can process calls concurrently
+
+### easy_ocr
+This code call easy_ocr which is a model that will help us get text information for a given image 
+
+### GPT4
+This code is used for our system that directly calls GPT4 vision by passing in an image and prompt directly 
+
+### GPT4Frontload 
+This code is used for our system that gets a json from gpt4 vision and uses that json for later queries 
+
+### GPT4Main
+This is the code we use to get gpt4 information for our main system with 4 models 
+
+### GRiT
+This is the code used to get dense captioning information for our main system with 4 models 
+
+### JsonCombiner
+This is the code that we use in order to combine the data from 4 models in our main system with 4 models 
 
 ### miscellaneous
-This folder contains files that could possibly be used for later 
+This is the code that we might possibly use in the future 
 
+### oneformer
+This is the code used for the instance segmentation for our main system with 4 models 
 
-### test-image:
-This folder contains test images in which can be used for testing purposes 
+### real-time
+This is the code used for our real-time system 
 
+### test-image
+These are some test images that we use for testing 
 
-### blip2_test.py
-This file allows a user to get image summarization information from blip2
+### test-image(2)
+This is a second batch of images that we might use for later 
 
+### testFiles
+This contains the text files specifically the history file that contains all of the questions that a person has asked 
 
-### BuildLLaVAQuery.py
-This file builds a LLaVAQuery in which we will pass into LLaVA so that we can get an optimal response 
-for densecaptions 
-
-### easyocr_test.py
-This file allows us to get text information for a given image along with the bounding boxes for 
-for the text that is recieved 
+### current.png
+This is the current png that we will be analyzing 
 
 ### main.py
-This file is where we will pass in all of the jsons to get a combined json and pass it into gpt-4 along with a query 
-in order to get an answer from gpt-4
+This is where we will be runnning all of the code in our system 
 
-### oneformer.json
-This is where we will be storing the output from oneformer 
 
-### test_llava.py
-This is where we will be giving a prompt and image to llava which will allows us 
-
-### test_oneformer.py
-This is where we will be running oneformer 
 
 
 

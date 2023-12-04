@@ -1,170 +1,95 @@
 {
-    "Objects in image": [
+    "Objects": [
         {
-            "Object name": "Sky",
-            "Children objects": [],
-            "List of Dense captions for object": [
-                "Clear blue sky"
+            "name": "Bus1",
+            "Children": [],
+            "Dense captions": [
+                "Green and yellow colored",
+                "Parked",
+                "Displaying a destination sign reading 'TO TERMINAL'",
+                "Reflective windows showing sky and structure",
+                "Equipped with headlights and mirrors"
             ],
-            "Text on object": [],
-            "Possible safety concerns": []
-        },
-        {
-            "Object name": "Grass",
-            "Children objects": [],
-            "List of Dense captions for object": [
-                "Green grass covering ground"
-            ],
-            "Text on object": [],
-            "Possible safety concerns": []
-        },
-        {
-            "Object name": "Dog1",
-            "Children objects": [
-                {
-                    "Object name": "Collar1",
-                    "Children objects": [],
-                    "List of Dense captions for object": [
-                        "Black and white collar"
-                    ],
-                    "Text on object": [],
-                    "Possible safety concerns": []
-                }
-            ],
-            "List of Dense captions for object": [
-                "Front running dog",
-                "White with black and brown patches color",
-                "Action: running towards viewer"
-            ],
-            "Text on object": [],
-            "Possible safety concerns": [
-                "A fast-moving dog could be a tripping hazard"
+            "Text": [
+                "TO TERMINAL",
+                "4801"
             ]
         },
         {
-            "Object name": "Dog2",
-            "Children objects": [
-                {
-                    "Object name": "Collar2",
-                    "Children objects": [],
-                    "List of Dense captions for object": [
-                        "Red collar"
-                    ],
-                    "Text on object": [],
-                    "Possible safety concerns": []
-                }
+            "name": "Bus2",
+            "Children": [],
+            "Dense captions": [
+                "Green and yellow colored",
+                "Parked next to Bus1",
+                "Displaying a destination sign reading 'TO TERMINAL'",
+                "Reflective windows showing Bus1 and structure",
+                "Equipped with headlights and mirrors"
             ],
-            "List of Dense captions for object": [
-                "Running dog to the left",
-                "Color: mostly white with black spots",
-                "Action: running at an angle away from viewer"
-            ],
-            "Text on object": [],
-            "Possible safety concerns": [
-                "A dog crossing the path could be a potential obstruction"
+            "Text": [
+                "TO TERMINAL",
+                "4700"
             ]
         },
         {
-            "Object name": "Dog3",
-            "Children objects": [
+            "name": "Structure",
+            "Children": [
                 {
-                    "Object name": "Collar3",
-                    "Children objects": [],
-                    "List of Dense captions for object": [
-                        "Blue collar"
+                    "name": "SupportBeam",
+                    "Children": [],
+                    "Dense captions": [
+                        "Gray colored",
+                        "Vertical orientation",
+                        "Supporting structure overhead"
                     ],
-                    "Text on object": [],
-                    "Possible safety concerns": []
-                }
-            ],
-            "List of Dense captions for object": [
-                "Running dog to the right",
-                "Color: brown and white",
-                "Action: running towards viewer"
-            ],
-            "Text on object": [],
-            "Possible safety concerns": [
-                "A dog running towards a person may cause a distraction or collision"
-            ]
-        },
-        {
-            "Object name": "Dog4",
-            "Children objects": [
-                {
-                    "Object name": "Collar4",
-                    "Children objects": [],
-                    "List of Dense captions for object": [
-                        "No visible collar"
-                    ],
-                    "Text on object": [],
-                    "Possible safety concerns": []
-                }
-            ],
-            "List of Dense captions for object": [
-                "Rear dog",
-                "Color: white with black patches",
-                "Action: running, slightly blurred indicating speed"
-            ],
-            "Text on object": [],
-            "Possible safety concerns": [
-                "A moving dog in the background might suddenly change direction"
-            ]
-        },
-        {
-            "Object name": "Bench",
-            "Children objects": [
-                {
-                    "Object name": "Person1",
-                    "Children objects": [
-                        {
-                            "Object name": "Clothing1",
-                            "Children objects": [],
-                            "List of Dense captions for object": [
-                                "Red and white striped sweater"
-                            ],
-                            "Text on object": [],
-                            "Possible safety concerns": []
-                        }
-                    ],
-                    "List of Dense captions for object": [
-                        "Person sitting",
-                        "Color: red and white clothing",
-                        "Action: seated facing to the left"
-                    ],
-                    "Text on object": [],
-                    "Possible safety concerns": []
+                    "Text": []
                 },
                 {
-                    "Object name": "Person2",
-                    "Children objects": [
-                        {
-                            "Object name": "Clothing2",
-                            "Children objects": [],
-                            "List of Dense captions for object": [
-                                "Blue jacket"
-                            ],
-                            "Text on object": [],
-                            "Possible safety concerns": []
-                        }
+                    "name": "Crossbar",
+                    "Children": [],
+                    "Dense captions": [
+                        "Gray colored",
+                        "Horizontal orientation",
+                        "Connected to SupportBeams"
                     ],
-                    "List of Dense captions for object": [
-                        "Person sitting",
-                        "Color: blue outer clothing",
-                        "Action: seated facing right with attention towards the dogs"
-                    ],
-                    "Text on object": [],
-                    "Possible safety concerns": []
+                    "Text": []
                 }
             ],
-            "List of Dense captions for object": [
-                "Wooden bench with two people",
-                "Color: brown",
-                "Action: stationary"
+            "Dense captions": [
+                "Metallic-gray color",
+                "Supporting aerial devices",
+                "Geometric pattern with multiple beams and crossbars"
             ],
-            "Text on object": [],
-            "Possible safety concerns": [
-                "A bench located near a walking path"
-            ]
+            "Text": []
+        },
+        {
+            "name": "AerialDevice1",
+            "Children": [],
+            "Dense captions": [
+                "Red and white colored",
+                "Suspended",
+                "Complex machinery with multiple rotors"
+            ],
+            "Text": []
+        },
+        {
+            "name": "AerialDevice2",
+            "Children": [],
+            "Dense captions": [
+                "Red and white colored",
+                "Suspended beside AerialDevice1",
+                "Similar in appearance to AerialDevice1"
+            ],
+            "Text": []
+        },
+        {
+            "name": "Sky",
+            "Children": [],
+            "Dense captions": [
+                "Blue and orange hues",
+                "Dusk or dawn ambiance",
+                "Reflected in the bus windows"
+            ],
+            "Text": []
         }
     ]
 }

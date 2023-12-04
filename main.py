@@ -220,9 +220,14 @@ Returns:
 None
 '''
 def followup_gpt4frontload(path):
+    start_time = time.time()
     json_result = GPT4Frontload.GPT_front_load.get_gpt4_frontload(path)
-    start_followup_gpt4frontload(json_result)
+    end_time = time.time()
 
+    with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\benchmark_finalsys.txt", 'a') as file:
+        file.write("Frontloading Runtime: " + str(end_time - start_time) + "\n")
+
+    start_followup_gpt4frontload(json_result)
 
 
 '''''''''
@@ -251,7 +256,13 @@ def start_followup_gpt4frontload(json_result):
         if query != "n":
             # Call ChatGPT
 
+            start_time = time.time()
             response = get_followup_answer_gpt4frontload(query, json_result)
+            end_time = time.time()
+
+            with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\benchmark_finalsys.txt",
+                      'a') as file:
+                file.write("Query Runtime: " + str(end_time - start_time) + "\n")
 
             print("Response: ", response)
 
@@ -291,7 +302,7 @@ def get_followup_answer_gpt4frontload(query, json_result):
 
     prompt = prefix + json_result + "\n" + betweenItemAndHistory + history + "\n" + currentQuestionPrompt + query
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     # here we will be building the string that we will put into content
     gpt4_results = openai.ChatCompletion.create(
@@ -398,6 +409,7 @@ if __name__ == '__main__':
 
         image = cv2.imread(directory_path + "\\" + filename)
 
+        # this is the farthest i can lower the resolution without impacting the quality of responses darastically
         width = int(image.shape[1] * 0.8)
         height = int(image.shape[0] * 0.8)
         new_resolution = (width, height)
@@ -405,14 +417,20 @@ if __name__ == '__main__':
         # Resize the image
         img_resized = cv2.resize(image, new_resolution, interpolation=cv2.INTER_AREA)
 
-        cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png", img_resized)
+        # here we will be doing loseless compression
+        cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png", img_resized, [int(cv2.IMWRITE_PNG_COMPRESSION), 9])
 
         # now we can get the image summarization, and then after
         print("What's in front of me?")
 
         # this is where we will be getting the image summarization of an image
+        start_time = time.time()
         image_sum = get_summarization("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png")
+        end_time = time.time()
         print("Response: ", image_sum)
+
+        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\benchmark_finalsys.txt", 'a') as file:
+            file.write("Runtime: " + str(end_time - start_time) + "\n")
 
         # this is to call the follow up methods of the main system
         # get_followup_mainsys(image_sum)
