@@ -1,29 +1,17 @@
 import GPT4Frontload.GPT_front_load
-from multiprocessing import Pool, Manager
-import openai
 import cv2
-import time
-from PIL import Image
-import os
-import blip2_endpoint_call
-import real_time
 import real_time.real_time_system
-import real_time.real_time_system.blip2_endpoint
 import openai
 import time
-# import replicate
 from multiprocessing import Pool, Manager
-import real_time
-import json
 
 # this will be used for the object detection for YOLO
 from ultralytics import YOLO
 
-
 # code for the real-time mode
 import real_time.real_time_system.real_time_system
 
-
+# this is the json that we will be using for the follow up queries
 json_reuse = None
 
 # now we will be including the frontloading code
@@ -104,29 +92,33 @@ def get_followup_answer_gpt4frontload(query, json_result):
 
 
 if __name__ == '__main__':
+
+    # load up the yolo v8 model
     model = YOLO('yolov8n.pt')
 
     # this is where we will be recording from the webcam
     # Open the webcam with explicit permission request
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Use CAP_DSHOW for Windows
 
+    # make sure nothing went wrong when trying to capture webcame footage
     if not cap.isOpened():
         print("Error: Could not open webcam. Please grant camera access permission.")
         exit()
 
+    # here we will be showing the webcam footage on the labtop
     try:
-
         while True:
             ret, frame = cap.read()
 
             if not ret:
                 break
 
+            # here we will be showing the frame to the screen
             cv2.imshow('Webcame Live', frame)
 
             key = cv2.waitKey(1)
 
-            # 115 is the s key
+            # if the s key is pressed we will start the real-time and follow up system
             if key & 0xFF == ord('s'):
 
                 print("System starting... ")
@@ -150,6 +142,7 @@ if __name__ == '__main__':
                         cv2.imwrite("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png",
                                     img_resized, [int(cv2.IMWRITE_PNG_COMPRESSION), 9])
 
+                        # this is where we will be starting up the real-time part of our system
                         query = input("Question: ")
 
                         # here we will be calling the real-time method
@@ -157,9 +150,8 @@ if __name__ == '__main__':
 
                         print("System: ", real_time_response)
 
-                        # then we will be able to ask if a person wants
-                        # ask further questions. If they want to then
-                        # we will be calling the follow up questioning system
+
+                        # this is the follow up part of the system
                         query = input("Do you have any follow up questions? (yes/no): ")
 
                         # here we will be starting up the follow up system
