@@ -1,93 +1,139 @@
 {
     "Objects": [
         {
-            "name": "Bus1",
+            "name": "Frame",
             "Children": [],
             "Dense captions": [
-                "Green and yellow colored",
-                "Parked",
-                "Displaying a destination sign reading 'TO TERMINAL'",
-                "Reflective windows showing sky and structure",
-                "Equipped with headlights and mirrors"
+                "rectangular",
+                "contains a photograph",
+                "placed on a surface"
             ],
-            "Text": [
-                "TO TERMINAL",
-                "4801"
-            ]
+            "Text": []
         },
         {
-            "name": "Bus2",
+            "name": "Toy",
             "Children": [],
             "Dense captions": [
-                "Green and yellow colored",
-                "Parked next to Bus1",
-                "Displaying a destination sign reading 'TO TERMINAL'",
-                "Reflective windows showing Bus1 and structure",
-                "Equipped with headlights and mirrors"
+                "green",
+                "cartoonish",
+                "seems to be an alien figure",
+                "sitting on a surface"
             ],
-            "Text": [
-                "TO TERMINAL",
-                "4700"
-            ]
+            "Text": []
         },
         {
-            "name": "Structure",
+            "name": "Mug",
+            "Children": [],
+            "Dense captions": [
+                "cylindrical",
+                "blue with text",
+                "on a surface"
+            ],
+            "Text": []
+        },
+        {
+            "name": "Glasses",
+            "Children": [],
+            "Dense captions": [
+                "transparent",
+                "rectangular",
+                "resting on a surface"
+            ],
+            "Text": []
+        },
+        {
+            "name": "Cup",
+            "Children": [],
+            "Dense captions": [
+                "silver",
+                "reflective",
+                "tapered shape",
+                "on a surface"
+            ],
+            "Text": []
+        },
+        {
+            "name": "Plant1",
+            "Children": [],
+            "Dense captions": [
+                "green",
+                "leafy",
+                "growing in a pot"
+            ],
+            "Text": []
+        },
+        {
+            "name": "Lamp",
+            "Children": [],
+            "Dense captions": [
+                "upright",
+                "providing light",
+                "shade covering bulb",
+                "next to furniture"
+            ],
+            "Text": []
+        },
+        {
+            "name": "Furniture",
             "Children": [
                 {
-                    "name": "SupportBeam",
+                    "name": "Shelf",
                     "Children": [],
                     "Dense captions": [
-                        "Gray colored",
-                        "Vertical orientation",
-                        "Supporting structure overhead"
+                        "wooden",
+                        "holding various items",
+                        "upright"
                     ],
                     "Text": []
                 },
                 {
-                    "name": "Crossbar",
+                    "name": "Chair",
                     "Children": [],
                     "Dense captions": [
-                        "Gray colored",
-                        "Horizontal orientation",
-                        "Connected to SupportBeams"
+                        "wooden",
+                        "has a cushion",
+                        "situated under a table",
+                        "furniture"
+                    ],
+                    "Text": []
+                },
+                {
+                    "name": "Table",
+                    "Children": [],
+                    "Dense captions": [
+                        "wooden",
+                        "surface for holding items",
+                        "supports a lamp and other objects"
                     ],
                     "Text": []
                 }
             ],
             "Dense captions": [
-                "Metallic-gray color",
-                "Supporting aerial devices",
-                "Geometric pattern with multiple beams and crossbars"
+                "assorted furniture across the room",
+                "made of wood",
+                "functional"
             ],
             "Text": []
         },
         {
-            "name": "AerialDevice1",
+            "name": "Chandelier",
             "Children": [],
             "Dense captions": [
-                "Red and white colored",
-                "Suspended",
-                "Complex machinery with multiple rotors"
+                "hanging from the ceiling",
+                "illuminated",
+                "decorative",
+                "central lighting source"
             ],
             "Text": []
         },
         {
-            "name": "AerialDevice2",
+            "name": "Plant2",
             "Children": [],
             "Dense captions": [
-                "Red and white colored",
-                "Suspended beside AerialDevice1",
-                "Similar in appearance to AerialDevice1"
-            ],
-            "Text": []
-        },
-        {
-            "name": "Sky",
-            "Children": [],
-            "Dense captions": [
-                "Blue and orange hues",
-                "Dusk or dawn ambiance",
-                "Reflected in the bus windows"
+                "potted",
+                "green",
+                "leafy",
+                "near a window"
             ],
             "Text": []
         }

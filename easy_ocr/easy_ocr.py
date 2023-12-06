@@ -3,14 +3,14 @@ import time
 
 '''''''''''
 Descriptions: 
-this method allows a user to get all easy_ocr information that is needed
+this method allows a user to get all text information from easy_ocr 
 
 Returns:
-gives a result json with a list of the strings that were detected in a given image 
+gives all of the text information in a given image 
 '''
 def get_easryocr():
 
-    # give the languages you want the model to detect
+    # we will have english as our default language
     reader = easyocr.Reader(['en'])
 
     # gives the text output of the current image

@@ -16,7 +16,7 @@ def get_grit():
     endpoint_url = "http://localhost:5001/get_grit_results"
 
     # this is the image in which we will be getting the instance segmentation for
-    image_file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png"
+    image_file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png"
 
     # this is the image that we will be passing in
     image = {'image' : open(image_file_path, 'rb')}
@@ -37,3 +37,5 @@ def get_grit():
     # return the response back
     return results
 
+if __name__ == '__main__':
+    get_grit()

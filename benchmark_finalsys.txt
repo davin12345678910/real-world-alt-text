@@ -15,3 +15,5 @@ Runtime: 0.4491288661956787
 Frontloading Runtime: 7.4036242961883545
 Runtime: 0.6309909820556641
 Frontloading Runtime: 11.560078620910645
+Frontloading Runtime: 15.997400760650635
+Frontloading Runtime: 25.008777618408203

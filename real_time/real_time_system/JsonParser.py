@@ -3,7 +3,7 @@ import json
 
 from shapely import Polygon
 
-from hierachy import Hierachy
+from real_time.real_time_system.hierachy import Hierachy
 class JsonParser:
     """
     Important Class definitions:
@@ -74,12 +74,12 @@ class JsonParser:
         """
         #1. This part will sort the maskRCNN objects by their size (in terms of area)
         """
-        mask_rcnn_objects = self.objects["results"]
-        mask_rcnn_objects = sorted(mask_rcnn_objects,
+        oneformer_objects = self.objects["results"]
+        oneformer_objects_sorted = sorted(oneformer_objects,
                                    key=lambda x: Polygon(x["bbox"]).area)
 
         object_names = []
-        for object in mask_rcnn_objects:
+        for object in oneformer_objects_sorted:
             object_names.append(object["name"])
 
         """
@@ -87,7 +87,7 @@ class JsonParser:
         relationships between the objects in the maskRCNN object and will also make sure that 
         no object has a child of any of its child objects 
         """
-        hierachy = self.get_first_layer(mask_rcnn_objects)
+        hierachy = self.get_first_layer(oneformer_objects_sorted)
 
         """
         #4. Here we will make the final Json as a string, which will contain all of 
@@ -114,12 +114,12 @@ class JsonParser:
     that came from the mask_rcnn Json without text or descriptions (text or descriptions will be added in second layer)
     """
 
-    def get_first_layer(self, llava_objects):
+    def get_first_layer(self, oneformer_objects):
 
         """
         Make sure that the json given is not None, or else we will return an exception
         """
-        if llava_objects == None:
+        if oneformer_objects == None:
             raise Exception("Cannot give None mask_rcnn Json")
 
         """
@@ -134,7 +134,7 @@ class JsonParser:
         """
         hiearchies = []
 
-        for current_object in llava_objects:
+        for current_object in oneformer_objects:
 
             bbox = current_object["bbox"]
 

@@ -32,28 +32,6 @@ class Hierachy:
         self.include = True
 
     """
-    Definition: this will set the text of the current hierachy  
-
-    Parameters:
-    1. text: this is the text that the current object will get
-
-    Returns: nothing
-    """
-    def set_text(self, text):
-        self.text = text
-
-    """
-    Definition: This will set the descriptions of the current hierachy
-
-    Parameters:
-    1. descriptions: This is the descriptions that the current object will get 
-
-    Returns: nothing 
-    """
-    def set_descriptions(self, descriptions):
-        self.descriptions = descriptions
-
-    """
     Definition: This gives the size of the current hierachy 
 
     Parameters: nothing

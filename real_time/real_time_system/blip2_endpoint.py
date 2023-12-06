@@ -53,8 +53,4 @@ def get_blip2(path, object):
 
     return results
 
-# for testing purposes
-if __name__ == '__main__':
-    response = get_blip2("/test-image/a_bus.jpg", "Question: What is in the image? Answer:")
-    print("Response: ", response)
 

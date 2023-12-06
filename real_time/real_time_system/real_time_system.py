@@ -4,12 +4,12 @@ from ultralytics import YOLO
 # import requests
 from PIL import Image
 import os
-import blip2_endpoint
+import real_time.real_time_system.blip2_endpoint
 import openai
 import time
 # import replicate
 from multiprocessing import Pool, Manager
-from JsonParser import JsonParser
+from real_time.real_time_system.JsonParser import JsonParser
 
 import json
 
@@ -28,7 +28,7 @@ None
 '''
 def get_blip2_response(bbox, path, queue, name):
     start = time.time()
-    response = blip2_endpoint.get_blip2(path, name)
+    response = real_time.real_time_system.blip2_endpoint.get_blip2(path, name)
     bbox_formatted = [[bbox[0], bbox[1]],
             [bbox[2], bbox[1]],
             [bbox[2], bbox[3]],
@@ -36,7 +36,7 @@ def get_blip2_response(bbox, path, queue, name):
     queue.put({"name" : name, "bbox": bbox_formatted, "description" : response})
     end = time.time()
 
-    print("Elapsed_time: ", (end - start))
+    # print("Elapsed_time: ", (end - start))
 
 
 '''''''''
@@ -64,7 +64,7 @@ def real_time_test(path, pool, queue, query, model):
 
     end_time3 = time.time()
 
-    print("Elapsed_time yolo: ", (end_time3 - start_time))
+    # print("Elapsed_time yolo: ", (end_time3 - start_time))
 
     '''''''''
     Here we will be processing all of the yolo information which we will 
@@ -223,7 +223,7 @@ def real_time_test(path, pool, queue, query, model):
 
     elapsed_time_first = end_time_first - start_time
 
-    print("Elapsed_time_first: ", elapsed_time_first)
+    # print("Elapsed_time_first: ", elapsed_time_first)
 
     # here we will gather all of the output
     data_list = []
@@ -286,7 +286,7 @@ def real_time_test(path, pool, queue, query, model):
     prompt = (prefix + final_json + " TimeStamp: " + str(time.time()) + ". " +
               currentQuestionPrompt + " " + query)
 
-    openai.api_key = "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"
+    openai.api_key = "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"
 
     # here we will be building the string that we will put into content
     gpt4_results = openai.ChatCompletion.create(
@@ -304,7 +304,7 @@ def real_time_test(path, pool, queue, query, model):
     elapsed_time = end_time - start_time
     print("Elapsed_time: ", elapsed_time)
 
-    print(response)
+    return response
 
 
 # here we will be going through each of the images in the test_images

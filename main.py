@@ -425,7 +425,7 @@ if __name__ == '__main__':
 
         # this is where we will be getting the image summarization of an image
         start_time = time.time()
-        image_sum = get_summarization("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png")
+        image_sum = get_summarization("current.png")
         end_time = time.time()
         print("Response: ", image_sum)
 
@@ -436,7 +436,7 @@ if __name__ == '__main__':
         # get_followup_mainsys(image_sum)
 
         # this is teh follow up code for gpt4 front loading
-        followup_gpt4frontload("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\current.png")
+        followup_gpt4frontload("current.png")
 
         # this is to test the gptsys
         # followup_gptsys()

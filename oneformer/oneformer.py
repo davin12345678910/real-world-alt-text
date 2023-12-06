@@ -12,7 +12,7 @@ this will return the json of oneformer with all of the objects that it detected
 def get_oneformer():
 
     # this is the endpoint that we will be calling
-    endpoint_url = "http://localhost:5000/get_oneformer_results"
+    endpoint_url = "http://localhost:5001/get_oneformer_results"
 
     # this is the image in which we will be getting the instance segmentation for
     image_file_path = "C:\\Users\\davin\\PycharmProjects\\real-world-alt-text\\test-image\\current.png"

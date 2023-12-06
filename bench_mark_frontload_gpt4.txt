@@ -408,3 +408,8 @@ File: C:\Users\davin\PycharmProjects\real-world-alt-text_test\current.png
 Front loading runtime: 7.4036242961883545s 
 File: C:\Users\davin\PycharmProjects\real-world-alt-text_test\current.png
 Front loading runtime: 11.559048891067505s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text_test\current.png
+Front loading runtime: 3.940967559814453s 
+Front loading runtime: 12.011170625686646s 
+File: C:\Users\davin\PycharmProjects\real-world-alt-text_test\current.png
+Front loading runtime: 25.00031280517578s 

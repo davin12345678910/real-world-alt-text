@@ -13,7 +13,7 @@ def get_gpt4_frontload(path):
         current_file.write("File: " + path + "\n")
 
     # OpenAI API Key
-    api_key = "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"
+    api_key = "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"
 
 
     # Function to encode the image
@@ -39,6 +39,7 @@ def get_gpt4_frontload(path):
     - What it is wearing if possible such as a shirt, paths etc.
     - What it contains and more if possible  
     - Relational information to other objects
+    - as much text information on the given object that is there
     If no text on object, leave as []
     If there are multiple objects with the same name: <object_name>1,…,<object_name>n
     Give a json that is within the 4096 token limit without info loss  
