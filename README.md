@@ -121,6 +121,12 @@ torch: https://pytorch.org/get-started/locally/
 1. `cd real_time`
 2. `cd real_time_system`
 3. `python real_time_system.py`
+
+
+### How to use mainsys.py
+1. do the same steps for blip2 server
+2. in a seperate terminal do `conda activate real-time`
+3. Then you can start mainsys.py
  
 
 ## Have any Questions?
