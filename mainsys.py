@@ -180,6 +180,9 @@ if __name__ == '__main__':
 
                                 query = input("Question (if no question press n): ")
 
+                        with open("C:\\Users\\davin\\PycharmProjects\\real-world-alt-text_test\\textFiles\\history.txt", "w") as file:
+                            file.write("")
+
             if key & 0xFF == ord('q'):
                 break
 
